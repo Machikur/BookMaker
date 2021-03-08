@@ -1,0 +1,8 @@
+com/app/configuration/WebConfiguration.java
+ com.app.configuration.WebConfiguration
+com/app/controller/HomeController.java
+ com.app.controller.HomeController
+com/app/AppApplication.java
+ com.app.AppApplication
+com/app/configuration/WebSecurityConfiguration.java
+ com.app.configuration.WebSecurityConfiguration

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Title</title>
+    <link href="/webjars/materializecss/1.0.0/css/materialize.css" type="text/css" rel="stylesheet" media="all"/>
+</head>
+<body>
+<div>
+<div class="right white-text">
+    <div class="row center-align">
+        <div sec:authorize="isAuthenticated()">
+            <div>Zalogowano jako <span sec:authentication="name"></span> </div>
+            <form name="login" th:action="@{/logout}" method="post">
+                <button class="btn" type="submit">Wyloguj</button>
+            </form>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <form th:action="@{/login}" method="get">
+                <button class="btn" type="submit" value="Zaloguj">Zaloguj</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="nav-wrapper blue-grey white-text ">
+    <div class="center">
+        <h2>Witaj w internetowym bukmacherze</h2>
+    </div>
+</div>
+</div>
+<section layout:fragment="content">
+    <p>Space for content</p>
+</section>
+<div class="nav-wrapper grey" style="position: fixed; bottom: 0; right: 0;">
+    <span>Aplikacja wykonana przez <a
+            href="https://github.com/Machikur">Machikur</a>. Wszystkie prawa zastrzeżone</span>
+</div>
+</body>
+</html>
