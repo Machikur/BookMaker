@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Title</title>
@@ -9,33 +9,47 @@
 </head>
 <body>
 <div>
-<div class="right white-text">
-    <div class="row center-align">
-        <div sec:authorize="isAuthenticated()">
-            <div>Zalogowano jako <span sec:authentication="name"></span> </div>
-            <form name="login" th:action="@{/logout}" method="post">
-                <button class="btn" type="submit">Wyloguj</button>
-            </form>
-        </div>
+    <div class="nav-wrapper green white-text ">
         <div sec:authorize="!isAuthenticated()">
-            <form th:action="@{/login}" method="get">
-                <button class="btn" type="submit" value="Zaloguj">Zaloguj</button>
-            </form>
+            <h2 class="center" style="  margin: 0 auto;">Witaj w internetowym bukmacherze</h2>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <h2 class="center" style="  margin: 0 auto;">Witaj <span sec:authentication="name"></span></h2>
         </div>
     </div>
 </div>
-<div class="nav-wrapper blue-grey white-text ">
-    <div class="center">
-        <h2>Witaj w internetowym bukmacherze</h2>
+
+<nav>
+    <div class="nav-wrapper blue-grey row">
+            <div class="row" sec:authorize="!isAuthenticated()">
+                <ul id="nav-right" class="center hide-on-med-and-down">
+                    <li class="col s6"><a th:href="@{/login}">Zaloguj</a></li>
+                    <li class="col s6"><a th:href="@{/register}">Rejestracja</a></li>
+                </ul>
+            </div>
+        <div sec:authorize="isAuthenticated()">
+            <ul id="nav-left" class="left hide-on-med-and-down">
+                <li><a th:href="@{/profile}">Profil</a></li>
+                <li><a th:href="@{/profile}">Mecze</a></li>
+                <li><a th:href="@{/profile}">Twoje Zakłady</a></li>
+            </ul>
+            <div class="right" style="margin-right: 10px">
+                <form class="col s2" name="logout" th:action="@{/logout}" method="post">
+                    <button class="btn" type="submit">Wyloguj</button>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
-</div>
+</nav>
 <section layout:fragment="content">
     <p>Space for content</p>
 </section>
 <div class="nav-wrapper grey" style="position: fixed; bottom: 0; right: 0;">
-    <span>Aplikacja wykonana przez <a
-            href="https://github.com/Machikur">Machikur</a>. Wszystkie prawa zastrzeżone</span>
+    <span>
+        Aplikacja wykonana przez
+        <a href="https://github.com/Machikur">Machikur.</a>
+        Wszystkie prawa zastrzeżone
+    </span>
 </div>
 </body>
 </html>

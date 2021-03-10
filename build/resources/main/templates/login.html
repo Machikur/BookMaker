@@ -11,17 +11,15 @@
     <div class="container">
         <div class="center-align">
             <h2 class="blue-text">Logowanie</h2>
-
-                <div id="errorMessage" class="red-text" th:if="${param.error}">
-                    <span class="red-text validate" th:utext="#{login.error}">Nieprawidłowe dane</span>
-                </div>
-
-            <form class="s3"  th:action="@{/login}" method="post">
-                <div class="input-field col s5">
+            <div id="errorMessage" class="red-text" th:if="${param.error}">
+                <span class="red-text validate" th:utext="#{login.error}">Nieprawidłowe dane</span>
+            </div>
+            <form class="s3" th:action="@{/login}" method="post">
+                <div class="input-field col s6">
                     <input type="text" id="username" required="required" name="username" placeholder="Username">
                     <label for="username">Nazwa użytkownika</label>
                 </div>
-                <div class="input-field col s3 background" style="background: papayawhip">
+                <div class="input-field col s6 ">
                     <input type="password" id="password" required="required" name="password" placeholder="Password">
                     <label for="password">Hasło</label>
                 </div>
