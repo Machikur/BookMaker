@@ -2,17 +2,16 @@ package com.app.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Goal {
 
@@ -21,11 +20,13 @@ public class Goal {
     private Long id;
 
     @NotNull
-    @ManyToOne
+    @JoinColumn
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
     private Player player;
 
     @NotNull
-    @ManyToOne
+    @JoinColumn
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
     private Match match;
 
     @NotNull
@@ -34,13 +35,15 @@ public class Goal {
     @NotNull
     private LocalTime timeOfGoal;
 
-    public Goal(@NotNull Player player, @NotNull Match match, @NotNull LocalDate dateOfGoal, @NotNull LocalTime timeOfGoal) {
-        this.player = player;
-        this.match = match;
+    public Goal(@NotNull LocalDate dateOfGoal, @NotNull LocalTime timeOfGoal) {
         this.dateOfGoal = dateOfGoal;
         this.timeOfGoal = timeOfGoal;
     }
 
+    public void setMatch(Match match){
+        this.match=match;
+        match.addGoal(this);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,5 +55,12 @@ public class Goal {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Gol strzelony przez " + player.toString() + "\n" +
+                "Dnia " + dateOfGoal + "\n" +
+                "O godzienie " + timeOfGoal + "\n";
     }
 }

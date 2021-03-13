@@ -15,7 +15,7 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
     @EntityGraph(attributePaths = {"goals"})
     Optional<Match> findById(Long id);
 
-    Set<Match> findAllByOppositeTeamIdOrFirstTeamId(Long id, Long id2);
+    Set<Match> findAllByOppositeTeamIdOrHostTeamId(Long id, Long id2);
 
     Set<Match> findAllByDateOfMatch(LocalDate startTime);
 

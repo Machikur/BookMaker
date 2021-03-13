@@ -4,7 +4,6 @@ import com.app.domain.Goal;
 import com.app.domain.Match;
 import com.app.domain.Player;
 import com.app.domain.Winner;
-import com.app.exception.MatchNotFoundException;
 import com.app.exception.WinnerException;
 import com.app.repository.MatchRepository;
 import org.springframework.stereotype.Service;
@@ -28,25 +27,24 @@ public class MatchService {
 
 
     public Set<Match> findAllMatchesOfFootballClub(Long footballClubId) {
-        return matchRepository.findAllByOppositeTeamIdOrFirstTeamId(footballClubId, footballClubId);
+        return matchRepository.findAllByOppositeTeamIdOrHostTeamId(footballClubId, footballClubId);
     }
 
     public Set<Match> findAllByDateOfMatch(LocalDate dateOfMatch) {
         return matchRepository.findAllByDateOfMatch(dateOfMatch);
     }
 
-    public Set<Match> findAllByFinished(boolean finished){
+    public Set<Match> findAllByFinished(boolean finished) {
         return matchRepository.findAllByFinished(finished);
     }
 
-    public Optional<Match> findById(Long id){
+    public Optional<Match> findById(Long id) {
         return matchRepository.findById(id);
     }
 
-    protected Match setWinner(Long matchId) throws WinnerException, MatchNotFoundException {
-        Match match = findById(matchId).orElseThrow(MatchNotFoundException::new);
+    protected Match setWinner(Match match) {
         if (match.getFinishTime() != null) {
-            Set<Player> firstTeamPlayers = match.getFirstTeam().getPlayers();
+            Set<Player> firstTeamPlayers = match.getHostTeam().getPlayers();
             Set<Player> opTeamPlayers = match.getOppositeTeam().getPlayers();
             Set<Goal> goals = match.getGoals();
 
@@ -65,7 +63,7 @@ public class MatchService {
             } else if (opTeamGoals > firstTeamGoals) {
                 match.setWinner(Winner.OPPOSITE_TEAM);
             } else {
-                match.setWinner(Winner.FIRST_TEAM);
+                match.setWinner(Winner.HOST_TEAM);
             }
             return match;
         }

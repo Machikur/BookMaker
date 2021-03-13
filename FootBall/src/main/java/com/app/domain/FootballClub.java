@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,8 +28,16 @@ public class FootballClub {
     @OneToMany(mappedBy = "footballClub")
     private Set<Player> players= new HashSet<>();
 
-    @OneToMany
-    private Set<Match> matches= new HashSet<>();
+    @OneToMany( mappedBy = "hostTeam")
+    private Set<Match> matchesAsHost = new HashSet<>();
+
+    @OneToMany(mappedBy = "oppositeTeam")
+    private Set<Match> matchesAsOpponent = new HashSet<>();
+
+    public FootballClub(@NotBlank String name, @NotBlank String shortName) {
+        this.name = name;
+        this.shortName = shortName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -47,4 +52,8 @@ public class FootballClub {
         return getClass().hashCode();
     }
 
+    @Override
+    public String toString() {
+        return name + " (" +shortName + ")";
+    }
 }

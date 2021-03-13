@@ -23,11 +23,12 @@ public class Player {
     @NotBlank
     private String fullName;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private FootballClub footballClub;
 
-    @OneToMany(mappedBy = "player")
-    private Set<Goal> goals= new HashSet<>();
+    @OneToMany(mappedBy = "player",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Goal> goals = new HashSet<>();
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
@@ -42,12 +43,17 @@ public class Player {
         this.position = position;
     }
 
-    public void addGoal(Goal goal){
+    public void addGoal(Goal goal) {
         goals.add(goal);
     }
 
+    public void setFootballClub(FootballClub footballClub) {
+        this.footballClub = footballClub;
+        footballClub.getPlayers().add(this);
+    }
+
     public double countSkillsLevel() {
-        return skills.countLevel();
+        return skills.countLevel() * position.getChanceInPercentagesToShotGoal();
     }
 
     @Override
@@ -63,5 +69,8 @@ public class Player {
         return getClass().hashCode();
     }
 
-
+    @Override
+    public String toString() {
+        return fullName;
+    }
 }

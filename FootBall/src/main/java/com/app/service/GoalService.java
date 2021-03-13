@@ -6,6 +6,7 @@ import com.app.repository.GoalRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -17,8 +18,12 @@ public class GoalService {
         this.goalRepository = goalRepository;
     }
 
-    public Goal SaveGoal(Goal goal) {
+    public Goal saveGoal(Goal goal) {
         return goalRepository.save(goal);
+    }
+
+    public Optional<Goal> findById(Long id) {
+        return goalRepository.findById(id);
     }
 
     public Set<Goal> findAllByPlayerId(Long id) {
