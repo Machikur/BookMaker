@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-public class FootballClub {
+public class FootballClub implements HasId {
 
     @Id
     @GeneratedValue
@@ -25,13 +25,13 @@ public class FootballClub {
     @NotBlank
     private String shortName;
 
-    @OneToMany(mappedBy = "footballClub")
-    private Set<Player> players= new HashSet<>();
+    @OneToMany(mappedBy = "footballClub", cascade = {CascadeType.PERSIST})
+    private Set<Player> players = new HashSet<>();
 
-    @OneToMany( mappedBy = "hostTeam")
+    @OneToMany(mappedBy = "hostTeam", cascade = CascadeType.PERSIST)
     private Set<Match> matchesAsHost = new HashSet<>();
 
-    @OneToMany(mappedBy = "oppositeTeam")
+    @OneToMany(mappedBy = "oppositeTeam", cascade = CascadeType.PERSIST)
     private Set<Match> matchesAsOpponent = new HashSet<>();
 
     public FootballClub(@NotBlank String name, @NotBlank String shortName) {
@@ -54,6 +54,6 @@ public class FootballClub {
 
     @Override
     public String toString() {
-        return name + " (" +shortName + ")";
+        return name + " (" + shortName + ")";
     }
 }

@@ -1,12 +1,10 @@
 package com.app.repository;
 
 import com.app.domain.Goal;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -18,5 +16,4 @@ public interface GoalRepository extends CrudRepository<Goal, Long> {
 
     Set<Goal> findAllByDateOfGoal(LocalDate date);
 
-    int countAllByMatchId(Long id);
 }

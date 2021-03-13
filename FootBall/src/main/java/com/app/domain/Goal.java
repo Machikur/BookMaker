@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Goal {
+public class Goal implements HasId {
 
     @Id
     @GeneratedValue
@@ -21,12 +21,12 @@ public class Goal {
 
     @NotNull
     @JoinColumn
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
+    @ManyToOne
     private Player player;
 
     @NotNull
     @JoinColumn
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
+    @ManyToOne
     private Match match;
 
     @NotNull
@@ -40,14 +40,10 @@ public class Goal {
         this.timeOfGoal = timeOfGoal;
     }
 
-    public void setMatch(Match match){
-        this.match=match;
-        match.addGoal(this);
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass() || id==null) return false;
         Goal that = (Goal) o;
         return id.equals(that.id);
     }

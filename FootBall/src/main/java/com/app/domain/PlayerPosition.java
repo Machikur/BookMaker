@@ -5,11 +5,11 @@ public enum PlayerPosition {
 
     private final int chanceInPercentagesToShotGoal;
 
-    PlayerPosition(int chanceInPercentagesToShotGoal){
+    PlayerPosition(int chanceInPercentagesToShotGoal) {
         this.chanceInPercentagesToShotGoal = chanceInPercentagesToShotGoal;
     }
 
     public double getChanceInPercentagesToShotGoal() {
-        return chanceInPercentagesToShotGoal/100f;
+        return chanceInPercentagesToShotGoal / 100f;
     }
 }

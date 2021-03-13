@@ -14,7 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Match {
+@Table(name = "Matches")
+public class Match implements HasId {
 
     private final static int MATCH_TIME_IN_MINUTES = 90;
 
@@ -23,11 +24,11 @@ public class Match {
     private Long id;
 
     @JoinColumn
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne
     private FootballClub hostTeam;
 
     @JoinColumn
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne
     private FootballClub oppositeTeam;
 
     private LocalDate dateOfMatch;
@@ -40,12 +41,14 @@ public class Match {
 
     private Winner winner;
 
-    @OneToMany(mappedBy = "match")
+    @OneToMany(mappedBy = "match", cascade = CascadeType.MERGE)
     private Set<Goal> goals = new HashSet<>();
 
     public Match(FootballClub hostTeam, FootballClub oppositeTeam, LocalDate dateOfMatch, LocalTime startTime) {
         this.hostTeam = hostTeam;
+        hostTeam.getMatchesAsHost().add(this);
         this.oppositeTeam = oppositeTeam;
+        oppositeTeam.getMatchesAsOpponent().add(this);
         this.dateOfMatch = dateOfMatch;
         this.startTime = startTime;
         setFinishTime();
@@ -57,12 +60,13 @@ public class Match {
 
     public void addGoal(Goal goal) {
         goals.add(goal);
+        goal.setMatch(this);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
         Match that = (Match) o;
         return id.equals(that.id);
     }
@@ -74,11 +78,19 @@ public class Match {
 
     @Override
     public String toString() {
+        return !finished ? matchToString() : matchToString() + "\n " + resultToString();
+
+    }
+
+    public String matchToString() {
         return "Mecz pomiędzy " + getHostTeam() + " i " + getOppositeTeam() + "\n" +
-                "Dnia - " + getDateOfMatch() + "\n" +
-                "Zwycięzcą został " + winner + "\n" +
+                "Czas rozpoczęcia - " + getDateOfMatch() + " " + getStartTime();
+    }
+
+    private String resultToString() {
+        return "Zwycięzcą został " + winner + "\n" +
                 "Z wynikiem " + getResultOfMatch() + "\n" +
-                "Strzelone gole : " + goalsToString()+ "\n" +
+                "Strzelone gole : " + goalsToString() + "\n" +
                 "Mecz zakończony o godzienie - " + finishTime;
     }
 

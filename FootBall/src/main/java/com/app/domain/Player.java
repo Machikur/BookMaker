@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Player {
+public class Player implements HasId {
 
     @Id
     @GeneratedValue
@@ -23,11 +23,11 @@ public class Player {
     @NotBlank
     private String fullName;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
     private FootballClub footballClub;
 
     @OneToMany(mappedBy = "player",
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+            cascade = CascadeType.PERSIST)
     private Set<Goal> goals = new HashSet<>();
 
     @NotNull
@@ -35,6 +35,7 @@ public class Player {
     private Skills skills;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private PlayerPosition position;
 
     public Player(@NotBlank String fullName, @NotNull Skills skills, @NotNull PlayerPosition position) {
@@ -45,6 +46,7 @@ public class Player {
 
     public void addGoal(Goal goal) {
         goals.add(goal);
+        goal.setPlayer(this);
     }
 
     public void setFootballClub(FootballClub footballClub) {
@@ -59,7 +61,7 @@ public class Player {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
         Player that = (Player) o;
         return id.equals(that.id);
     }

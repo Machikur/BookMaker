@@ -1,6 +1,7 @@
 package com.app.service;
 
 import com.app.domain.*;
+import com.app.service.system.MatchManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +13,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SpringBootTest
-class MatchEngineTest {
+class RandomMatchManagerTest {
 
     @Autowired
-    private MatchCreator matchCreator;
+    private MatchManager matchManager;
 
     @Autowired
     private PlayerService playerService;
@@ -56,17 +57,17 @@ class MatchEngineTest {
                 new Player("Messi20", randomSkills(), PlayerPosition.GOALKEEPER)
         );
 
-        playerList1.forEach(p->playerService.savePlayer(p));
-        playerList2.forEach(p->playerService.savePlayer(p));
+        playerList1.forEach(p -> playerService.savePlayer(p));
+        playerList2.forEach(p -> playerService.savePlayer(p));
 
         FootballClub club1 = new FootballClub("Wisła-Kraków", "WIK");
         FootballClub club2 = new FootballClub("Legia-Warszawa", "LEW");
 
-        playerList1.forEach(p->p.setFootballClub(club1));
-        playerList2.forEach(p->p.setFootballClub(club2));
+        playerList1.forEach(p -> p.setFootballClub(club1));
+        playerList2.forEach(p -> p.setFootballClub(club2));
 
-        playerList1.forEach(p->playerService.savePlayer(p));
-        playerList2.forEach(p->playerService.savePlayer(p));
+        playerList1.forEach(p -> playerService.savePlayer(p));
+        playerList2.forEach(p -> playerService.savePlayer(p));
 
         footballClubService.saveFootballClub(club1);
         footballClubService.saveFootballClub(club2);
@@ -75,8 +76,8 @@ class MatchEngineTest {
         Match match2 = new Match(club1, club2, LocalDate.now(), LocalTime.now().minusMinutes(90));
 
         //when
-        match = matchCreator.doMatch(match);
-        match2 = matchCreator.doMatch(match2);
+        match = matchManager.doMatch(match);
+        match2 = matchManager.doMatch(match2);
 
         //then
         System.out.println(match);

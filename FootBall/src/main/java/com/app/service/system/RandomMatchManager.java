@@ -1,10 +1,14 @@
-package com.app.service;
+package com.app.service.system;
 
 import com.app.domain.FootballClub;
 import com.app.domain.Goal;
 import com.app.domain.Match;
 import com.app.domain.Player;
+import com.app.service.GoalService;
+import com.app.service.MatchService;
+import com.app.service.PlayerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,19 +21,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MatchEngine implements MatchCreator {
-
-    private final MatchService matchService;
-    private final PlayerService playerService;
-    private final GoalService goalService;
-    private final ThreadLocalRandom random = ThreadLocalRandom.current();
-    private LocalDateTime currentFakeMatchTime;
+@Slf4j
+public class RandomMatchManager implements MatchManager {
 
     private final static int MAX_SECONDS_BETWEEN_GOAL = 1800;
     private final static int CHANCE_TO_GOAL_IN_PERCENTAGES = 50;
     private final static String OPPOSITE_TEAM = "opTeam";
     private final static String FIRST_TEAM = "firstTeam";
-
+    private final MatchService matchService;
+    private final PlayerService playerService;
+    private final ThreadLocalRandom random = ThreadLocalRandom.current();
+    private LocalDateTime currentFakeMatchTime;
 
     public Match doMatch(Match match) {
 
@@ -51,6 +53,7 @@ public class MatchEngine implements MatchCreator {
             }
         }
         matchService.saveMatch(matchService.setWinner(match));
+        log.info("mecz z numerem id-{} został zakończony", match.getId());
         return match;
     }
 
@@ -76,13 +79,9 @@ public class MatchEngine implements MatchCreator {
     private void createAndSaveRandomGoal(Match match, FootballClub club, LocalDateTime time) {
         Player shooter = chosePlayerToGoal(club.getPlayers());
         Goal goal = new Goal(time.toLocalDate(), time.toLocalTime());
-        goalService.saveGoal(goal);
         shooter.addGoal(goal);
-        playerService.savePlayer(shooter);
-        goal.setMatch(match);
+        match.addGoal(goal);
         matchService.saveMatch(match);
-        goal.setPlayer(shooter);
-        goalService.saveGoal(goal);
     }
 
     private Player chosePlayerToGoal(Set<Player> players) {
@@ -93,7 +92,7 @@ public class MatchEngine implements MatchCreator {
         while (shooter == null) {
             for (Player sortedPlayer : sortedPlayers) {
                 if (decideIfShouldShotGoal(sortedPlayer)) {
-                    shooter = sortedPlayer;
+                    shooter = playerService.findById(sortedPlayer.getId()).get();
                     break;
                 }
             }

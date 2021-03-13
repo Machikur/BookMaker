@@ -4,8 +4,6 @@ import com.app.domain.Player;
 import com.app.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,12 +20,13 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Optional<Player> getPlayerById(Long id){
+    public Optional<Player> findById(Long id) {
         return playerRepository.findById(id);
     }
 
-    public Set<Player> findAllByClubId(Long clubId){
+    public Set<Player> findAllByClubId(Long clubId) {
         return playerRepository.findAllByFootballClubId(clubId);
     }
+
 
 }

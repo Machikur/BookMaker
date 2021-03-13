@@ -1,5 +1,6 @@
 package com.app.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -10,7 +11,8 @@ import javax.validation.constraints.Min;
 
 @Entity
 @NoArgsConstructor
-public class Skills {
+@Getter
+public class Skills implements HasId {
 
     @Id
     @GeneratedValue

@@ -1,7 +1,6 @@
 package com.app.service;
 
 import com.app.domain.Goal;
-import com.app.domain.Player;
 import com.app.repository.GoalRepository;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +37,5 @@ public class GoalService {
         return goalRepository.findAllByDateOfGoal(date);
     }
 
-    public int countAllByMatchId(Long matchId) {
-        return goalRepository.countAllByMatchId(matchId);
-    }
 
 }

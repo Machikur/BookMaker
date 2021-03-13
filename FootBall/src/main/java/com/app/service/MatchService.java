@@ -25,8 +25,7 @@ public class MatchService {
         return matchRepository.save(match);
     }
 
-
-    public Set<Match> findAllMatchesOfFootballClub(Long footballClubId) {
+    public Set<Match> findAllMatchesOfFootballClubId(Long footballClubId) {
         return matchRepository.findAllByOppositeTeamIdOrHostTeamId(footballClubId, footballClubId);
     }
 
@@ -42,7 +41,11 @@ public class MatchService {
         return matchRepository.findById(id);
     }
 
-    protected Match setWinner(Match match) {
+    public long countAllByFinished(boolean finished) {
+        return matchRepository.countAllByFinished(finished);
+    }
+
+    public Match setWinner(Match match) {
         if (match.getFinishTime() != null) {
             Set<Player> firstTeamPlayers = match.getHostTeam().getPlayers();
             Set<Player> opTeamPlayers = match.getOppositeTeam().getPlayers();
@@ -65,6 +68,7 @@ public class MatchService {
             } else {
                 match.setWinner(Winner.HOST_TEAM);
             }
+            match.setFinished(true);
             return match;
         }
         throw new WinnerException("Mecz jeszcze sie nie skończył");

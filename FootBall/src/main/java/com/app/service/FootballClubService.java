@@ -4,6 +4,7 @@ import com.app.domain.FootballClub;
 import com.app.repository.FootballClubRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,12 +16,16 @@ public class FootballClubService {
         this.footballClubRepository = footballClubRepository;
     }
 
-    public FootballClub saveFootballClub(FootballClub footballClub){
+    public FootballClub saveFootballClub(FootballClub footballClub) {
         return footballClubRepository.save(footballClub);
     }
 
-    public Optional<FootballClub> findById(Long id){
+    public Optional<FootballClub> findById(Long id) {
         return footballClubRepository.findById(id);
+    }
+
+    public List<Long> getAllIds() {
+        return footballClubRepository.getAllIds();
     }
 
 }
