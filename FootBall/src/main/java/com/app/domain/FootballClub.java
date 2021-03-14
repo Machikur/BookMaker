@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,8 +26,18 @@ public class FootballClub implements HasId {
     @NotBlank
     private String shortName;
 
-    @OneToMany(mappedBy = "footballClub", cascade = {CascadeType.PERSIST})
+    @NotBlank
+    private String pictureUrl;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private ClubStatistics clubStatistics;
+
+    @OneToMany(mappedBy = "footballClub", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Player> players = new HashSet<>();
+
+    private Double power;
 
     @OneToMany(mappedBy = "hostTeam", cascade = CascadeType.PERSIST)
     private Set<Match> matchesAsHost = new HashSet<>();
@@ -34,15 +45,17 @@ public class FootballClub implements HasId {
     @OneToMany(mappedBy = "oppositeTeam", cascade = CascadeType.PERSIST)
     private Set<Match> matchesAsOpponent = new HashSet<>();
 
-    public FootballClub(@NotBlank String name, @NotBlank String shortName) {
+    public FootballClub(@NotBlank String name, @NotBlank String shortName, @NotBlank String pictureUrl) {
         this.name = name;
         this.shortName = shortName;
+        this.pictureUrl = pictureUrl;
+        this.clubStatistics = new ClubStatistics();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
         FootballClub that = (FootballClub) o;
         return id.equals(that.id);
     }
@@ -55,5 +68,14 @@ public class FootballClub implements HasId {
     @Override
     public String toString() {
         return name + " (" + shortName + ")";
+    }
+
+    @PrePersist
+    @PreUpdate
+    void countPower() {
+        power = players.stream()
+                .map(Player::getSkillLevel)
+                .reduce(Double::sum)
+                .orElse(0d) / players.size();
     }
 }

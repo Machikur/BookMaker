@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html layout:decorator="template"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="template">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,17 +10,17 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="center-align">
-            <h2 class="blue-text">Logowanie</h2>
-            <div id="errorMessage" class="red-text" th:if="${param.error}">
+            <h2>Logowanie</h2>
+            <div class="red-text" id="errorMessage" th:if="${param.error}">
                 <span class="red-text validate" th:utext="#{login.error}">Nieprawidłowe dane</span>
             </div>
-            <form class="s3" th:action="@{/login}" method="post">
+            <form class="s3" method="post" th:action="@{/login}">
                 <div class="input-field col s6">
-                    <input type="text" id="username" required="required" name="username" placeholder="Username">
+                    <input id="username" name="username" placeholder="Username" required="required" type="text">
                     <label for="username">Nazwa użytkownika</label>
                 </div>
                 <div class="input-field col s6 ">
-                    <input type="password" id="password" required="required" name="password" placeholder="Password">
+                    <input id="password" name="password" placeholder="Password" required="required" type="password">
                     <label for="password">Hasło</label>
                 </div>
                 <button class="btn" type="submit" value="Zaloguj">Zaloguj</button>

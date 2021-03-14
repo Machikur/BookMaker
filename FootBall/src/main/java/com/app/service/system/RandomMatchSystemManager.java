@@ -3,14 +3,15 @@ package com.app.service.system;
 import com.app.domain.FootballClub;
 import com.app.domain.Match;
 import com.app.exception.NotEnoughFootballClubsException;
-import com.app.service.FootballClubService;
-import com.app.service.MatchService;
+import com.app.service.data.FootballClubService;
+import com.app.service.data.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,6 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequiredArgsConstructor
 @Slf4j
 @Service
+@Transactional
 public class RandomMatchSystemManager implements MatchSystemManager {
 
     private final static int MAX_NOT_FINISHED_MATCHES = 5;
@@ -42,9 +44,9 @@ public class RandomMatchSystemManager implements MatchSystemManager {
     }
 
     @Override
-    @Scheduled(fixedRate = 10000L)
+    @Scheduled(cron = "0 * * * * *")
     public void manage() {
-        while (matchService.countAllByFinished(false) < MAX_NOT_FINISHED_MATCHES) {
+        if (matchService.countAllByFinished(false) < MAX_NOT_FINISHED_MATCHES) {
             Match match = createRandomMatch();
             createThreadForMatch(match);
         }
@@ -59,7 +61,6 @@ public class RandomMatchSystemManager implements MatchSystemManager {
         FootballClub host = footballClubService.findById(ids.get(0)).get();
         FootballClub opponent = footballClubService.findById(ids.get(1)).get();
         Match match = matchService.saveMatch(new Match(host, opponent, getRandomDate(), getRandomTime()));
-        log.info("1");
         log.info("Mecz został utworzony, " + match);
         return match;
     }
@@ -68,7 +69,7 @@ public class RandomMatchSystemManager implements MatchSystemManager {
         Thread thread = new Thread(() -> {
             try {
                 Thread.sleep(countTimeToFinishMatchInMs(match));
-                matchManager.doMatch(match);
+                matchManager.doMatch(match.getId());
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
@@ -82,7 +83,7 @@ public class RandomMatchSystemManager implements MatchSystemManager {
     }
 
     private LocalTime getRandomTime() {
-        return LocalTime.now().minusMinutes(89).minusSeconds(45);
+        return LocalTime.now().minusMinutes(85).minusSeconds(45);
 //        int randomHour = random.nextInt(FINISH_HOUR_TIME - START_HOUR_TIME + 1) + START_HOUR_TIME;
 //        return LocalTime.of(randomHour, random.nextInt(60));
     }

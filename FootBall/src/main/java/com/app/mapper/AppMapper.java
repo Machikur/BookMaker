@@ -2,7 +2,6 @@ package com.app.mapper;
 
 import com.app.domain.*;
 import com.app.dto.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -18,7 +17,8 @@ public class AppMapper {
                 match.getFinishTime(),
                 match.getFinished(),
                 match.getWinner(),
-                mapToGoalDtoCollection(match.getGoals()));
+                mapToGoalDtoCollection(match.getGoals()),
+                match.getResult());
     }
 
     public static FootballClubDto mapToDto(FootballClub footballClub) {
@@ -26,20 +26,23 @@ public class AppMapper {
                 footballClub.getId(),
                 footballClub.getName(),
                 footballClub.getShortName(),
+                footballClub.getPictureUrl(),
+                mapToDto(footballClub.getClubStatistics()),
                 mapToPlayerListDto(footballClub.getPlayers()),
                 mapToIdList(footballClub.getMatchesAsHost()),
                 mapToIdList(footballClub.getMatchesAsOpponent()));
     }
 
     public static GoalDto mapToDto(Goal goal) {
-        return new GoalDto(goal.getId(), goal.getPlayer().getId(), goal.getMatch().getId(), goal.getDateOfGoal(), goal.getTimeOfGoal());
+        return new GoalDto(goal.getId(), goal.getPlayer().getFullName(), goal.getMatch().getId(), goal.getDateOfGoal(), goal.getTimeOfGoal());
     }
 
     public static PlayerDto mapToDto(Player player) {
         return new PlayerDto(
                 player.getId(),
                 player.getFullName(),
-                player.getFootballClub().getId(),
+                player.getFootballClub().getName(),
+                player.getPictureUrl(),
                 mapToIdList(player.getGoals()),
                 mapSkillsToDto(player.getSkills()),
                 player.getPosition());
@@ -55,6 +58,10 @@ public class AppMapper {
         return collection.stream()
                 .map(AppMapper::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+    public static ClubStatisticsDto mapToDto(ClubStatistics statistics) {
+        return new ClubStatisticsDto(statistics.getId(), statistics.getWinners(), statistics.getLosers(), statistics.getDraws());
     }
 
     public static Collection<MatchDto> mapToMatchListDto(Collection<Match> collection) {

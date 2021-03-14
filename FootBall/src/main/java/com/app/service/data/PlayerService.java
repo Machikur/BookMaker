@@ -1,4 +1,4 @@
-package com.app.service;
+package com.app.service.data;
 
 import com.app.domain.Player;
 import com.app.repository.PlayerRepository;

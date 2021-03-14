@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona głowna</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row top collection green lighten-3 no-padding" style="margin: 20px;border: outset darkgreen;">
+        <div class="s4 col left">
+            <a th:href="@{/club/{clubId}(clubId=${match.getHostTeam().getId()})}">
+            <img style="width: 400px; height: 400px; margin: 0" th:src="${match.getHostTeam().getPictureUrl()}">
+            </a>
+        </div>
+        <div class="s4 col right">
+            <a th:href="@{/club/{clubId}(clubId=${match.getOppositeTeam().getId()})}">
+            <img style="width: 400px; height: 400px; margin: 0" th:src="${match.getOppositeTeam().getPictureUrl()}">
+            </a>
+        </div>
+        <div class="s4 col center">
+            <h4 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
+                Walczący</h4>
+            <h4 th:text="'Data meczu - '+${match.getDateOfMatch()}"></h4>
+            <h4 th:text="'Start - '+${match.getStartTime()}"></h4>
+            <h4 th:text="'Koniec - '+${match.getFinishTime()}"></h4>
+            <h4 th:if="${match.finished}"><span
+                    th:text="'Zwycięzcą został - ' + ${match.getWinner().toString()}"></span></h4>
+            <h4 th:if="${match.result}"><span th:text="'Wynik - ' + ${match.getResult()}"></span></h4>
+            <form th:if="${!match.finished}" method="get" th:action="@{/ticket/{matchId}(matchId=${match.getId()})}">
+                <button type="submit" class="btn-large">Zrób zakład</button>
+            </form>
+
+        </div>
+
+
+    </div>
+    <h1 th:if="${match.getGoals().size()>0}" class="center-align">Strzelone bramki</h1>
+    <div th:with="goals=${match.getGoals()}">
+        <div th:each="goal:${goals}" class="row center-align green lighten-3 black-text"
+             style=" margin: 40px 200px;border: outset darkgreen;">
+            <h4 th:text="${goal.getPlayerName()} + ' - '+ ${goal.getTimeOfGoal()}"></h4>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

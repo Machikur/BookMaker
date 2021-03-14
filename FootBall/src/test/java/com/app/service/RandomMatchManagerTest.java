@@ -1,6 +1,9 @@
 package com.app.service;
 
 import com.app.domain.*;
+import com.app.service.data.FootballClubService;
+import com.app.service.data.MatchService;
+import com.app.service.data.PlayerService;
 import com.app.service.system.MatchManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +79,8 @@ class RandomMatchManagerTest {
         Match match2 = new Match(club1, club2, LocalDate.now(), LocalTime.now().minusMinutes(90));
 
         //when
-        match = matchManager.doMatch(match);
-        match2 = matchManager.doMatch(match2);
+        match = matchManager.doMatch(match.getId());
+        match2 = matchManager.doMatch(match2.getId());
 
         //then
         System.out.println(match);

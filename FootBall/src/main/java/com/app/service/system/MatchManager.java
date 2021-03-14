@@ -4,5 +4,5 @@ import com.app.domain.Match;
 
 public interface MatchManager {
 
-    Match doMatch(Match match);
+    Match doMatch(Long matchId);
 }

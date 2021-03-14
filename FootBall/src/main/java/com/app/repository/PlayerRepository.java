@@ -11,7 +11,7 @@ import java.util.Set;
 @Repository
 public interface PlayerRepository extends CrudRepository<Player, Long> {
 
-    @EntityGraph(attributePaths = {"goals", "goals.match"})
+    @EntityGraph(attributePaths = {"goals", "goals.match", "skills"})
     Optional<Player> findById(Long id);
 
     Set<Player> findAllByFootballClubId(Long id);

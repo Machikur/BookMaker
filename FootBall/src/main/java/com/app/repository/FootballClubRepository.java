@@ -8,13 +8,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface FootballClubRepository extends CrudRepository<FootballClub, Long> {
 
-    @EntityGraph(attributePaths = {"players","players.skills", "matchesAsHost", "matchesAsOpponent"})
+    @EntityGraph(attributePaths = {"players", "players.skills", "matchesAsHost", "matchesAsOpponent", "clubStatistics"})
     Optional<FootballClub> findById(Long id);
 
     @Query("SELECT F.id FROM FootballClub F")
     List<Long> getAllIds();
+
+    Set<FootballClub> findAll();
 }

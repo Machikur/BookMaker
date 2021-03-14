@@ -1,12 +1,18 @@
 package com.app.domain;
 
 public enum PlayerPosition {
-    GOALKEEPER(1), DEFENDER(20), STRIKER(95), MIDFIELDER(80);
+    GOALKEEPER(1, "Bramkarz"), DEFENDER(20, "Obrońca"), STRIKER(95, "Napastnik"), MIDFIELDER(80, "Pomocnik");
 
     private final int chanceInPercentagesToShotGoal;
+    private final String translate;
 
-    PlayerPosition(int chanceInPercentagesToShotGoal) {
+    PlayerPosition(int chanceInPercentagesToShotGoal, String translate) {
         this.chanceInPercentagesToShotGoal = chanceInPercentagesToShotGoal;
+        this.translate = translate;
+    }
+
+    public String getTranslate() {
+        return translate;
     }
 
     public double getChanceInPercentagesToShotGoal() {

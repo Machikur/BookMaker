@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.domain.Goal;
 import com.app.dto.GoalDto;
 import com.app.mapper.AppMapper;
-import com.app.service.GoalService;
+import com.app.service.data.GoalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

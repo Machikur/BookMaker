@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.domain.Player;
 import com.app.dto.PlayerDto;
 import com.app.mapper.AppMapper;
-import com.app.service.PlayerService;
+import com.app.service.data.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +34,7 @@ public class PlayerController {
     @GetMapping("/club/{id}")
     public ResponseEntity<Collection<PlayerDto>> getPlayersByFootballClubId(@PathVariable Long id) {
         Set<Player> players = playerService.findAllByClubId(id);
-        Collection<PlayerDto> playerDtos=AppMapper.mapToPlayerListDto(players);
+        Collection<PlayerDto> playerDtos = AppMapper.mapToPlayerListDto(players);
         if (players.size() != 0) {
             return ResponseEntity.ok(playerDtos);
         } else {

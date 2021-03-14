@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class GoalDto {
     private Long id;
-    private Long playerId;
+    private String playerName;
     private Long matchId;
     private LocalDate dateOfGoal;
     private LocalTime timeOfGoal;

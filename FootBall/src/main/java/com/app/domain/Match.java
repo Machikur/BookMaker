@@ -39,6 +39,9 @@ public class Match implements HasId {
 
     private Boolean finished = false;
 
+    private String result;
+
+    @Enumerated(EnumType.STRING)
     private Winner winner;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.MERGE)

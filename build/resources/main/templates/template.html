@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/html"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <title>Title</title>
-    <link href="/webjars/materializecss/1.0.0/css/materialize.css" type="text/css" rel="stylesheet" media="all"/>
+    <link href="/webjars/materializecss/1.0.0/css/materialize.css" media="all" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body class="blue-grey lighten-4">
 <div>
-    <div class="nav-wrapper green white-text ">
-        <div sec:authorize="!isAuthenticated()">
-            <h2 class="center" style="  margin: 0 auto;">Witaj w internetowym bukmacherze</h2>
+    <a th:href="@{/}">
+        <div class="nav-wrapper green white-text ">
+            <h2 class="center" style="  margin: 0 auto;">Witaj w internetowym bukmacherze
+                <span sec:authentication="name" sec:authorize="isAuthenticated()"></span></h2>
         </div>
-        <div sec:authorize="isAuthenticated()">
-            <h2 class="center" style="  margin: 0 auto;">Witaj <span sec:authentication="name"></span></h2>
-        </div>
-    </div>
+    </a>
 </div>
 
 <nav>
     <div class="nav-wrapper blue-grey row">
-            <div class="row" sec:authorize="!isAuthenticated()">
-                <ul id="nav-right" class="center hide-on-med-and-down">
-                    <li class="col s6"><a th:href="@{/login}">Zaloguj</a></li>
-                    <li class="col s6"><a th:href="@{/register}">Rejestracja</a></li>
-                </ul>
-            </div>
+        <div class="row" sec:authorize="!isAuthenticated()">
+            <ul class="center" id="nav-right">
+                <li class="col s6"><a th:href="@{/login}">Zaloguj</a></li>
+                <li class="col s6"><a th:href="@{/register}">Rejestracja</a></li>
+            </ul>
+        </div>
         <div sec:authorize="isAuthenticated()">
-            <ul id="nav-left" class="left hide-on-med-and-down">
+            <ul class="left " id="nav-left">
                 <li><a th:href="@{/profile}">Profil</a></li>
-                <li><a th:href="@{/profile}">Mecze</a></li>
+                <li><a th:href="@{/club}">Kluby Piłkarskie</a></li>
                 <li><a th:href="@{/profile}">Twoje Zakłady</a></li>
             </ul>
             <div class="right" style="margin-right: 10px">
-                <form class="col s2" name="logout" th:action="@{/logout}" method="post">
+                <form class="col s2" method="post" name="logout" th:action="@{/logout}">
                     <button class="btn" type="submit">Wyloguj</button>
                 </form>
             </div>
         </div>
     </div>
 </nav>
+<div class="validate red-text center" th:if="${error}">
+    <span th:text="${error}"></span>
+</div>
 <section layout:fragment="content">
     <p>Space for content</p>
 </section>
-<div class="nav-wrapper grey" style="position: fixed; bottom: 0; right: 0;">
+<div class="nav-wrapper grey" style="position: fixed; bottom: 0; ">
     <span>
         Aplikacja wykonana przez
         <a href="https://github.com/Machikur">Machikur.</a>

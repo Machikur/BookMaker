@@ -11,7 +11,8 @@ import java.util.Collection;
 public class PlayerDto {
     private Long id;
     private String fullName;
-    private Long footballClubId;
+    private String footballClubName;
+    private String pictureUrl;
     private Collection<Long> goalIds;
     private SkillsDto skills;
     private PlayerPosition position;

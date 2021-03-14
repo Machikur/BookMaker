@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Aktywne kluby</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div>
+        <div th:each="club,row : ${clubs}">
+            <a th:href="@{/club/{id}(id=${club.getId()})}">
+                <div class="s9 center-align green lighten-3 black-text"
+                     style=" margin: 40px 200px;border: outset darkgreen;">
+                    <img style=" width:122px;height:122px;" th:src="${club.getPictureUrl()}">
+                    <h2 th:text="${club.getName()}">Nazwa klubu</h2>
+                    <h4 th:text="${club.getShortName()}">Skrót</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

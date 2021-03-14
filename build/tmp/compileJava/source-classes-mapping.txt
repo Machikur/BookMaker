@@ -1,8 +1,44 @@
-com/app/configuration/WebConfiguration.java
- com.app.configuration.WebConfiguration
-com/app/controller/HomeController.java
- com.app.controller.HomeController
+com/app/client/domain/MatchStatistics.java
+ com.app.client.domain.MatchStatistics
 com/app/AppApplication.java
  com.app.AppApplication
 com/app/configuration/WebSecurityConfiguration.java
  com.app.configuration.WebSecurityConfiguration
+com/app/client/urlbuilder/PlayersUrls.java
+ com.app.client.urlbuilder.PlayersUrls
+com/app/client/domain/Winner.java
+ com.app.client.domain.Winner
+com/app/client/urlbuilder/FootballClubUrls.java
+ com.app.client.urlbuilder.FootballClubUrls
+com/app/client/domain/SkillsDto.java
+ com.app.client.domain.SkillsDto
+com/app/client/domain/PlayerDto.java
+ com.app.client.domain.PlayerDto
+com/app/client/service/PlayersService.java
+ com.app.client.service.PlayersService
+com/app/controller/PlayerController.java
+ com.app.controller.PlayerController
+com/app/client/domain/PlayerPosition.java
+ com.app.client.domain.PlayerPosition
+com/app/client/domain/GoalDto.java
+ com.app.client.domain.GoalDto
+com/app/client/urlbuilder/MatchUrls.java
+ com.app.client.urlbuilder.MatchUrls
+com/app/configuration/WebConfiguration.java
+ com.app.configuration.WebConfiguration
+com/app/client/service/MatchService.java
+ com.app.client.service.MatchService
+com/app/client/service/FootballClubService.java
+ com.app.client.service.FootballClubService
+com/app/client/domain/FootballClubDto.java
+ com.app.client.domain.FootballClubDto
+com/app/client/domain/ClubStatisticsDto.java
+ com.app.client.domain.ClubStatisticsDto
+com/app/controller/ClubsController.java
+ com.app.controller.ClubsController
+com/app/client/domain/MatchDto.java
+ com.app.client.domain.MatchDto
+com/app/controller/MatchController.java
+ com.app.controller.MatchController
+com/app/controller/HomeController.java
+ com.app.controller.HomeController

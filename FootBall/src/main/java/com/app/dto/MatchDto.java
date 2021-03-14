@@ -21,5 +21,6 @@ public class MatchDto {
     private Boolean finished;
     private Winner winner;
     private Collection<GoalDto> goals;
+    private String result;
 
 }

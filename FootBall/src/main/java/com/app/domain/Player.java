@@ -26,13 +26,17 @@ public class Player implements HasId {
     @ManyToOne
     private FootballClub footballClub;
 
+    private String pictureUrl = "https://icon-library.com/images/anonymous-icon/anonymous-icon-0.jpg";
+
     @OneToMany(mappedBy = "player",
-            cascade = CascadeType.PERSIST)
+            cascade = CascadeType.MERGE)
     private Set<Goal> goals = new HashSet<>();
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     private Skills skills;
+
+    private double skillLevel;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -40,6 +44,13 @@ public class Player implements HasId {
 
     public Player(@NotBlank String fullName, @NotNull Skills skills, @NotNull PlayerPosition position) {
         this.fullName = fullName;
+        this.skills = skills;
+        this.position = position;
+    }
+
+    public Player(@NotBlank String fullName, @NotNull Skills skills, @NotNull PlayerPosition position, String pictureUrl) {
+        this.fullName = fullName;
+        this.pictureUrl = pictureUrl;
         this.skills = skills;
         this.position = position;
     }
@@ -54,8 +65,10 @@ public class Player implements HasId {
         footballClub.getPlayers().add(this);
     }
 
-    public double countSkillsLevel() {
-        return skills.countLevel() * position.getChanceInPercentagesToShotGoal();
+    @PreUpdate
+    @PrePersist
+    void countSkillsLevel() {
+        skillLevel = skills.countLevel() * position.getChanceInPercentagesToShotGoal();
     }
 
     @Override

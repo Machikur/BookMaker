@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org"
-       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorator="template">
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Strona głowna</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Oto Strona testowa</h1>
-    <span th:text="${message}">Wiadomość</span>
+    <div>
+        <h1 class="center">Zaplanowane spotkania</h1>
+        <div th:each="match : ${matches}">
+            <a th:href="@{/match/{id}(id=${match.getId()})}">
+                <div class="row center-align green lighten-3 black-text"
+                     style=" margin: 40px 200px;border: outset darkgreen;">
+                    <div class="left center-align">
+                        <img th:src="${match.getHostTeam().getPictureUrl()}" style="height: 200px; width: 200px">
+                    </div>
+                    <div class="right center-align">
+                        <img th:src="${match.getOppositeTeam().getPictureUrl()}" style="height: 200px; width: 200px">
+                    </div>
+                    <div class="center center-align">
+                        <h3 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
+                            Walczący</h3>
+                        <h4 class="center">Rozstrzygnięcie</h4>
+                       <h5 th:text="${match.getDateOfMatch()}"></h5>
+                            <h5 th:text="${match.getFinishTime()}"></h5>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 
 </body>

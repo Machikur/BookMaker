@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.domain.Match;
 import com.app.dto.MatchDto;
 import com.app.mapper.AppMapper;
-import com.app.service.MatchService;
+import com.app.service.data.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
