@@ -37,7 +37,7 @@ public class FootballClub implements HasId {
     @OneToMany(mappedBy = "footballClub", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Player> players = new HashSet<>();
 
-    private Double power;
+    private double power;
 
     @OneToMany(mappedBy = "hostTeam", cascade = CascadeType.PERSIST)
     private Set<Match> matchesAsHost = new HashSet<>();
@@ -74,8 +74,10 @@ public class FootballClub implements HasId {
     @PreUpdate
     void countPower() {
         power = players.stream()
-                .map(Player::getSkillLevel)
-                .reduce(Double::sum)
-                .orElse(0d) / players.size();
+                .peek(Player::countSkillsLevel)
+                .mapToDouble(Player::getSkillLevel)
+                .average()
+                .orElse(0d);
     }
+    
 }

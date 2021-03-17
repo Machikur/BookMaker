@@ -15,7 +15,4 @@ public enum PlayerPosition {
         return translate;
     }
 
-    public double getChanceInPercentagesToShotGoal() {
-        return chanceInPercentagesToShotGoal / 100f;
-    }
 }

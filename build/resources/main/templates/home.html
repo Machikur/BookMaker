@@ -24,8 +24,9 @@
                         <h3 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
                             Walczący</h3>
                         <h4 class="center">Rozstrzygnięcie</h4>
+                        <div class="red-text">
                        <h5 th:text="${match.getDateOfMatch()}"></h5>
-                            <h5 th:text="${match.getFinishTime()}"></h5>
+                            <h5 th:text="${match.getFinishTime()}"></h5></div>
                     </div>
 
                 </div>

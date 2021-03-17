@@ -23,5 +23,4 @@ public class PlayerController {
         return "player/playerView";
     }
 
-
 }

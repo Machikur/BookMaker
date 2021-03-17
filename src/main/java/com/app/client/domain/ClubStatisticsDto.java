@@ -14,4 +14,5 @@ public class ClubStatisticsDto {
     public int getTotal() {
         return winners + losers + draws;
     }
+
 }

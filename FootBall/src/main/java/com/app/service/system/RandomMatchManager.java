@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -57,13 +55,13 @@ public class RandomMatchManager implements MatchManager {
             }
         }
         matchService.setWinnerAndSave(match);
-        log.info("mecz z numerem id-{} został zakończony", match.getId());
+        log.info("mecz pomiędzy {} i {} został zakończony", match.getHostTeam(),match.getOppositeTeam());
         return match;
     }
 
-    private String decideWhoShouldShotGoal(FootballClub firstTeam, FootballClub opTeam) {
-        double randomDouble = random.nextInt((int) (firstTeam.getPower() + opTeam.getPower()) + 1);
-        if (randomDouble > opTeam.getPower()) {
+    private String decideWhoShouldShotGoal(FootballClub host, FootballClub opTeam) {
+        double randomDouble = random.nextInt((int) (host.getPower() + opTeam.getPower()) + 1);
+        if (randomDouble > host.getPower()) {
             return OPPOSITE_TEAM;
         } else
             return FIRST_TEAM;
@@ -89,12 +87,11 @@ public class RandomMatchManager implements MatchManager {
     }
 
     private Player chosePlayerToGoal(Set<Player> players) {
-        List<Player> sortedPlayers = players.stream()
-                .sorted(Comparator.comparingDouble(Player::getSkillLevel).reversed())
-                .collect(Collectors.toList());
+        List<Player> shuffled=new ArrayList<>(players);
+        Collections.shuffle(shuffled);
         Player shooter = null;
         while (shooter == null) {
-            for (Player sortedPlayer : sortedPlayers) {
+            for (Player sortedPlayer : shuffled) {
                 if (decideIfShouldShotGoal(sortedPlayer)) {
                     shooter = playerService.findById(sortedPlayer.getId()).get();
                     break;

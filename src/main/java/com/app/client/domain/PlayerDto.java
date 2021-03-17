@@ -15,6 +15,4 @@ public class PlayerDto {
     private Collection<Long> goalIds;
     private SkillsDto skills;
     private PlayerPosition position;
-
-
 }

@@ -13,7 +13,7 @@ import java.util.Set;
 @Repository
 public interface FootballClubRepository extends CrudRepository<FootballClub, Long> {
 
-    @EntityGraph(attributePaths = {"players", "players.skills", "matchesAsHost", "matchesAsOpponent", "clubStatistics"})
+    @EntityGraph(attributePaths = {"matchesAsHost", "matchesAsOpponent"})
     Optional<FootballClub> findById(Long id);
 
     @Query("SELECT F.id FROM FootballClub F")

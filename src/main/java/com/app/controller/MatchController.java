@@ -1,15 +1,16 @@
 package com.app.controller;
 
 import com.app.client.service.MatchService;
+import com.app.domain.Ticket;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/match")
+@SessionAttributes("match")
 public class MatchController {
+
     private final MatchService matchService;
 
     public MatchController(MatchService matchService) {

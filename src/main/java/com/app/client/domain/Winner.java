@@ -1,7 +1,7 @@
 package com.app.client.domain;
 
 public enum Winner {
-    HOST_TEAM("Gospodarz"), OPPOSITE_TEAM("Oponent"), DRAW("Remis");
+    HOST_TEAM("Gospodarz"), DRAW("Remis"), OPPOSITE_TEAM("Oponent");
     private String desc;
 
     Winner(String desc) {

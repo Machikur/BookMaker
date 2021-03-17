@@ -30,7 +30,8 @@ public class AppMapper {
                 mapToDto(footballClub.getClubStatistics()),
                 mapToPlayerListDto(footballClub.getPlayers()),
                 mapToIdList(footballClub.getMatchesAsHost()),
-                mapToIdList(footballClub.getMatchesAsOpponent()));
+                mapToIdList(footballClub.getMatchesAsOpponent()),
+                footballClub.getPower());
     }
 
     public static GoalDto mapToDto(Goal goal) {

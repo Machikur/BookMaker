@@ -17,5 +17,9 @@ public class FootballClubDto {
     private Collection<PlayerDto> players;
     private Collection<Long> matchesAsHostIds;
     private Collection<Long> matchesAsOpponentIds;
+    private double power;
 
+    public double getPower() {
+        return Math.round(power);
+    }
 }

@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Transactional
 public class RandomMatchSystemManager implements MatchSystemManager {
 
-    private final static int MAX_NOT_FINISHED_MATCHES = 5;
+    private final static int MAX_NOT_FINISHED_MATCHES = 15;
     private final static int START_HOUR_TIME = 10;
     private final static int FINISH_HOUR_TIME = 20;
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
@@ -44,7 +44,7 @@ public class RandomMatchSystemManager implements MatchSystemManager {
     }
 
     @Override
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0/30 * * * * *")
     public void manage() {
         if (matchService.countAllByFinished(false) < MAX_NOT_FINISHED_MATCHES) {
             Match match = createRandomMatch();

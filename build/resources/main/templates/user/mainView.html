@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ostatnie zakłady</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div style="margin:15px 100px">
+        <h2 class="center-align"> Twoje aktywne zakłady</h2>
+        <div th:if="${!activeTickets.isEmpty()}">
+            <table class="centered">
+                <thead>
+                <tr>
+                    <th>Gospodarz</th>
+                    <th>Oponent</th>
+                    <th>Postawiono na</th>
+                    <th>Postawione pieniądze</th>
+                    <th>Pieniądze do wygrania</th>
+                    <th>Zakupiono</th>
+                    <th>Akcja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" ticket:${activeTickets}" th:class="${!ticket.done}? 'blue lighten-3' :
+                 (${ticket.wonTicket}? 'green lighten-3':'red lighten-3' )">
+                    <td th:text="${ticket.hostTeam}"></td>
+                    <td th:text="${ticket.opTeam}"></td>
+                    <td th:text="${ticket.guessedWinner}"></td>
+                    <td th:text="${ticket.quote}"></td>
+                    <td th:text="${ticket.quoteToWin}"></td>
+                    <td th:text="${ticket.getFormattedTime()}"></td>
+                    <td>
+                        <div th:if="${!ticket.done}">
+                            <a th:href="@{ticket/check(id=${ticket.id})}">Sprawdź bilet</a>
+                        </div>
+                        <div th:if="${ticket.done}">
+                            <p>Zakończone</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${activeTickets.isEmpty()}">
+            <h4 class="validate red-text center-align">Nie masz zadnych aktywnych zakładów</h4>
+        </div>
+    </div>
+</div>
+</body>
+</html>
