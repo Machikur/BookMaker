@@ -1,26 +1,30 @@
 package com.app.configuration;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    PasswordEncoder encoder() {
-        return NoOpPasswordEncoder.getInstance();
+    private final UserDetailsService userDetailsService;
+    private final AuthenticationHandler authenticationHandler;
+    private final PasswordEncoder encoder;
+
+    public WebSecurityConfiguration(UserDetailsService userDetailsService, AuthenticationHandler authenticationHandler, PasswordEncoder encoder) {
+        this.userDetailsService = userDetailsService;
+        this.authenticationHandler = authenticationHandler;
+        this.encoder = encoder;
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(encoder())
-                .withUser("Admin").authorities("ADMIN").password("Admin");
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(encoder);
     }
 
     @Override
@@ -29,7 +33,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .successHandler(authenticationHandler)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/");

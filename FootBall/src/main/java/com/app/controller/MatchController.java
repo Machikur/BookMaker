@@ -5,6 +5,8 @@ import com.app.dto.MatchDto;
 import com.app.mapper.AppMapper;
 import com.app.service.data.MatchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,9 +39,10 @@ public class MatchController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<MatchDto>> findAllFinished(@RequestParam Boolean isFinished) {
-        Collection<Match> matches = matchService.findAllByFinished(isFinished);
-        return buildResponseEntity(AppMapper.mapToMatchListDto(matches));
+    public ResponseEntity<Page<MatchDto>> findAllFinished(@RequestParam Boolean isFinished,
+                                                          @RequestParam(defaultValue = "0") int page) {
+        Page<Match> matchesPage = matchService.findAllByFinished(isFinished, PageRequest.of(page, 10));
+        return matchesPage.getSize() != 0 ? ResponseEntity.ok(matchesPage.map(AppMapper::mapToDto)) : ResponseEntity.notFound().build();
     }
 
     private ResponseEntity<Collection<MatchDto>> buildResponseEntity(Collection<MatchDto> matches) {

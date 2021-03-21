@@ -79,5 +79,5 @@ public class FootballClub implements HasId {
                 .average()
                 .orElse(0d);
     }
-    
+
 }

@@ -8,31 +8,31 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div>
-        <h1 class="center">Zaplanowane spotkania</h1>
-        <div th:each="match : ${matches}">
-            <a th:href="@{/match/{id}(id=${match.getId()})}">
-                <div class="row center-align green lighten-3 black-text"
-                     style=" margin: 40px 200px;border: outset darkgreen;">
-                    <div class="left center-align">
-                        <img th:src="${match.getHostTeam().getPictureUrl()}" style="height: 200px; width: 200px">
-                    </div>
-                    <div class="right center-align">
-                        <img th:src="${match.getOppositeTeam().getPictureUrl()}" style="height: 200px; width: 200px">
-                    </div>
-                    <div class="center center-align">
-                        <h3 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
-                            Walczący</h3>
-                        <h4 class="center">Rozstrzygnięcie</h4>
-                        <div class="red-text">
-                       <h5 th:text="${match.getDateOfMatch()}"></h5>
-                            <h5 th:text="${match.getFinishTime()}"></h5></div>
-                    </div>
-
+    <h1 class="center">Zaplanowane spotkania</h1>
+    <div th:if="${matches}" th:each="match : ${matches}">
+        <a th:href="@{/match/{id}(id=${match.getId()})}">
+            <div class="row center-align green lighten-3 black-text"
+                 style=" margin: 40px 200px;border: outset darkgreen;">
+                <div class="left center-align">
+                    <img style="height: 200px; width: 200px" th:src="${match.getHostTeam().getPictureUrl()}">
                 </div>
-            </a>
-        </div>
+                <div class="right center-align">
+                    <img style="height: 200px; width: 200px" th:src="${match.getOppositeTeam().getPictureUrl()}">
+                </div>
+                <div class="center center-align">
+                    <h3 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
+                        Walczący</h3>
+                    <div class="red-text">
+                        <h5 th:text="${match.getDateOfMatch()}"></h5>
+                        <h5 th:text="${match.getFinishTime()}"></h5></div>
+                </div>
+
+            </div>
+        </a>
     </div>
+</div>
+<div th:if="${!matches}">
+    <h2 class="validate red-text">Brak nadchodzących spotkań</h2>
 </div>
 
 </body>

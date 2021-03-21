@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="s4 col center">
-            <h4 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
+            <h4 th:text="${match.getHostTeam().getName()} + ' VS ' + ${match.getOppositeTeam().getName()} ">
                 Walczący</h4>
             <h4 th:text="'Data meczu - '+${match.getDateOfMatch()}"></h4>
             <h4 th:text="'Start - '+${match.getStartTime()}"></h4>
@@ -28,25 +28,19 @@
             <h4 th:if="${match.finished}"><span
                     th:text="'Zwycięzcą został - ' + ${match.getWinner().toString()}"></span></h4>
             <h4 th:if="${match.result}"><span th:text="'Wynik - ' + ${match.getResult()}"></span></h4>
-            <form th:if="${!match.getFinished()}" method="get" th:action="@{/ticket/new}" th:object="${match}">
-                <button type="submit" class="btn-large">Zrób zakład</button>
+            <form method="get" th:action="@{/ticket/new}" th:if="${!match.getFinished()}" th:object="${match}">
+                <button class="btn-large " type="submit">Obstaw mecz</button>
             </form>
         </div>
     </div>
-    </form>
-    </form>
-
 </div>
 
-
-</div>
-<h1 th:if="${match.getGoals().size()>0}" class="center-align">Strzelone bramki</h1>
+<h1 class="center-align" th:if="${match.getGoals().size()>0}">Strzelone bramki</h1>
 <div th:with="goals=${match.getGoals()}">
-    <div th:each="goal:${goals}" class="row center-align green lighten-3 black-text"
-         style=" margin: 40px 200px;border: outset darkgreen;">
+    <div class="row center-align green lighten-3 black-text" style=" margin: 40px 200px;border: outset darkgreen;"
+         th:each="goal:${goals}">
         <h4 th:text="${goal.getPlayerName()} + ' - '+ ${goal.getTimeOfGoal()}"></h4>
     </div>
-</div>
 </div>
 
 </body>

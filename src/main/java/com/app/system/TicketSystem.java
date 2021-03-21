@@ -2,10 +2,8 @@ package com.app.system;
 
 import com.app.client.domain.MatchDto;
 import com.app.client.domain.Winner;
-import com.app.domain.Ticket;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,14 +15,14 @@ public class TicketSystem implements TicketManager {
         double hostPower = matchDto.getHostTeam().getPower();
         double opponentPower = matchDto.getOppositeTeam().getPower();
         double baseCounter = 1.3;
-        double different =( hostPower - opponentPower) / 100;
+        double different = (hostPower - opponentPower) / 100;
         switch (winner) {
             case HOST_TEAM:
                 return baseCounter - different;
             case OPPOSITE_TEAM:
                 return baseCounter + different;
             case DRAW:
-                return different < 0 ? baseCounter + different/2 : baseCounter - different/2;
+                return different < 0 ? baseCounter + different / 2 : baseCounter - different / 2;
         }
         throw new RuntimeException();
     }
@@ -37,7 +35,5 @@ public class TicketSystem implements TicketManager {
         }
         return counters;
     }
-
-
 
 }

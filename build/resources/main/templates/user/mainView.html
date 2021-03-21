@@ -8,10 +8,23 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div style="margin:15px 100px">
-        <h2 class="center-align"> Twoje aktywne zakłady</h2>
+    <div style="margin:15px auto">
+        <h2 class="center-align"> Twoje zakłady</h2>
+        <nav>
+            <div class="nav-wrapper blue-grey lighten-1 ">
+                <div class="row" style="margin:auto 15px;">
+                    <ul>
+                        <li class="col"><a th:href="@{/ticket}">Wszystkie</a></li>
+                        <li class="col"><a th:href="@{/ticket(done=false)}">Oczekujące</a></li>
+                        <li class="col"><a th:href="@{/ticket(done=true)}">Skończone</a></li>
+                        <li class="col"><a th:href="@{/ticket/done(won=true)}">Wygrane</a></li>
+                        <li class="col"><a th:href="@{/ticket/done(won=false)}">Przegrane</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div th:if="${!activeTickets.isEmpty()}">
-            <table class="centered">
+            <table class=" center-align" style="max-width: 80%;margin:  20px auto;border: 1px solid black">
                 <thead>
                 <tr>
                     <th>Gospodarz</th>
@@ -19,19 +32,21 @@
                     <th>Postawiono na</th>
                     <th>Postawione pieniądze</th>
                     <th>Pieniądze do wygrania</th>
-                    <th>Zakupiono</th>
+                    <th>Dnia</th>
+                    <th>Wyniki</th>
                     <th>Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each=" ticket:${activeTickets}" th:class="${!ticket.done}? 'blue lighten-3' :
-                 (${ticket.wonTicket}? 'green lighten-3':'red lighten-3' )">
+                <tr style="border: 1px solid black"  th:class="${!ticket.done}? 'blue lighten-3' :
+                 (${ticket.wonTicket}? 'green lighten-3':'red lighten-3' )" th:each=" ticket:${activeTickets}">
                     <td th:text="${ticket.hostTeam}"></td>
                     <td th:text="${ticket.opTeam}"></td>
                     <td th:text="${ticket.guessedWinner}"></td>
                     <td th:text="${ticket.quote}"></td>
                     <td th:text="${ticket.quoteToWin}"></td>
-                    <td th:text="${ticket.getFormattedTime()}"></td>
+                    <td th:text="${ticket.matchDate}"></td>
+                    <td th:text="${ticket.result}? ${ticket.result}: ${ticket.getFormattedTime()}"></td>
                     <td>
                         <div th:if="${!ticket.done}">
                             <a th:href="@{ticket/check(id=${ticket.id})}">Sprawdź bilet</a>
@@ -45,7 +60,7 @@
             </table>
         </div>
         <div th:if="${activeTickets.isEmpty()}">
-            <h4 class="validate red-text center-align">Nie masz zadnych aktywnych zakładów</h4>
+            <h4 class="validate red-text center-align">Brak zakładów do wyświetlenia</h4>
         </div>
     </div>
 </div>

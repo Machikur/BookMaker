@@ -2,6 +2,7 @@ package com.app.mapper;
 
 import com.app.domain.*;
 import com.app.dto.*;
+import org.springframework.data.domain.Page;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -63,6 +64,10 @@ public class AppMapper {
 
     public static ClubStatisticsDto mapToDto(ClubStatistics statistics) {
         return new ClubStatisticsDto(statistics.getId(), statistics.getWinners(), statistics.getLosers(), statistics.getDraws());
+    }
+
+    public static Page<MatchDto> mapToMatchDtoPage(Page<Match> matchPage){
+        return matchPage.map(AppMapper::mapToDto);
     }
 
     public static Collection<MatchDto> mapToMatchListDto(Collection<Match> collection) {

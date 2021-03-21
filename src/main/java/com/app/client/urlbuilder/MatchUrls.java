@@ -21,6 +21,15 @@ public class MatchUrls {
                 .toUri();
     }
 
+    public URI getAllMatchesByFinished(boolean finished, int page) {
+        return UriComponentsBuilder.fromHttpUrl(clientPath)
+                .path("match")
+                .queryParam("isFinished", finished)
+                .queryParam("page", page)
+                .build()
+                .toUri();
+    }
+
     public URI getMatchById(long matchId) {
         return UriComponentsBuilder.fromHttpUrl(clientPath)
                 .path("match/{matchId}")

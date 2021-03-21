@@ -1,16 +1,13 @@
 package com.app.domain;
 
-import com.app.client.exception.NotEnoughCashException;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,6 +15,8 @@ import java.util.Set;
 
 @Getter
 @Entity
+@Setter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -32,22 +31,15 @@ public class User implements UserDetails {
 
     private boolean enabled = true;
 
-    private BigDecimal cash;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Account account;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private Set<Ticket> tickets = new HashSet<>();
 
-
-    public void putCash(BigDecimal amount) {
-        cash = cash.add(amount);
-    }
-
-    public void pay(BigDecimal amount) throws NotEnoughCashException {
-        if (cash.compareTo(amount) > 0) {
-            cash = cash.subtract(amount);
-        } else {
-            throw new NotEnoughCashException();
-        }
+    public User(@NotBlank String username, @NotBlank String password) {
+        this.username = username;
+        this.password = password;
     }
 
     @Override

@@ -19,7 +19,7 @@
         </div>
         <div class="s4 col right center-align " th:with="stats=${club.getClubStatistics()}">
             <h4>Rozegrane Mecze</h4>
-            <span w th:text="${club.getClubStatistics().getTotal()}"></span>
+            <span th:text="${club.getClubStatistics().getTotal()}" w></span>
             <h4>Wygrane Mecze</h4>
             <span th:text="${stats.getWinners()}"></span>
             <h4>Przegrane Mecze</h4>

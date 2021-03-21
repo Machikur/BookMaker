@@ -55,7 +55,7 @@ public class RandomMatchManager implements MatchManager {
             }
         }
         matchService.setWinnerAndSave(match);
-        log.info("mecz pomiędzy {} i {} został zakończony", match.getHostTeam(),match.getOppositeTeam());
+        log.info("mecz pomiędzy {} i {} został zakończony", match.getHostTeam(), match.getOppositeTeam());
         return match;
     }
 
@@ -87,7 +87,7 @@ public class RandomMatchManager implements MatchManager {
     }
 
     private Player chosePlayerToGoal(Set<Player> players) {
-        List<Player> shuffled=new ArrayList<>(players);
+        List<Player> shuffled = new ArrayList<>(players);
         Collections.shuffle(shuffled);
         Player shooter = null;
         while (shooter == null) {

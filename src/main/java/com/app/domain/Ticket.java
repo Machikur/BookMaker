@@ -5,15 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 public class Ticket {
@@ -31,10 +35,10 @@ public class Ticket {
     @NotBlank
     private String opTeam;
 
-    private Boolean wonTicket=null;
+    private Boolean wonTicket = null;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private User user;
+    @NotNull
+    private Long userId;
 
     @NotNull
     private Winner guessedWinner;
@@ -45,24 +49,17 @@ public class Ticket {
     @NotNull
     private BigDecimal quoteToWin;
 
-    private boolean done =false;
+    private boolean done = false;
 
-    private LocalDateTime createTime;
+    private LocalDate matchDate;
 
-    public Ticket(@NotNull Long matchId, @NotBlank String hostTeam, @NotBlank String opTeam) {
-        this.matchId = matchId;
-        this.hostTeam = hostTeam;
-        this.opTeam = opTeam;
-    }
+    private LocalTime matchTime;
+
+    private String result=null;
 
     public String getFormattedTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return createTime.format(formatter);
-    }
-
-    @PrePersist
-    void setCreateTime(){
-        createTime=LocalDateTime.now();
+        return LocalDateTime.of(matchDate,matchTime).format(formatter);
     }
 
 }

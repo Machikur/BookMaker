@@ -16,7 +16,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("matches",matchService.findAllByFinished(false));
+        model.addAttribute("matches", matchService.findAllByFinished(false,0).getContent());
         return "home";
     }
+
 }

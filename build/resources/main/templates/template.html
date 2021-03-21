@@ -12,38 +12,45 @@
     <a th:href="@{/}">
         <div class="nav-wrapper green white-text ">
             <h2 class="center" style="  margin: 0 auto;">Witaj w internetowym bukmacherze
-                <span sec:authentication="name" sec:authorize="isAuthenticated()"></span></h2>
+                <span sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name"></span>
+                    <span class="right" style="font-size: 15px" th:text="'Saldo : ' + ${#session.getAttribute('cash')+ 'zł'}"></span>
+                </span>
+            </h2>
         </div>
     </a>
 </div>
-
 <nav>
-    <div class="nav-wrapper blue-grey row">
+    <div class="nav-wrapper blue-grey">
         <div class="row" sec:authorize="!isAuthenticated()">
-            <ul class="center" id="nav-right">
-                <li class="col s6"><a th:href="@{/login}">Zaloguj</a></li>
-                <li class="col s6"><a th:href="@{/register}">Rejestracja</a></li>
+            <ul class="right">
+                <li class="col "><a th:href="@{/login}">Zaloguj</a></li>
+                <li class="col "><a th:href="@{/user/register}">Rejestracja</a></li>
             </ul>
         </div>
         <div sec:authorize="isAuthenticated()">
             <ul class="left " id="nav-left">
-                <li><a th:href="@{/profile}">Profil</a></li>
+                <li><a th:href="@{/}">Aktualne Rozgrywki</a></li>
                 <li><a th:href="@{/club}">Kluby Piłkarskie</a></li>
                 <li><a th:href="@{/ticket}">Twoje Zakłady</a></li>
             </ul>
-            <div class="right" style="margin-right: 10px">
-                <form class="col s2" method="post" name="logout" th:action="@{/logout}">
-                    <button class="btn" type="submit">Wyloguj</button>
-                </form>
-            </div>
+            <ul class="right">
+                <li class="col l2">
+                    <form method="post" name="logout" th:action="@{/logout}">
+                        <button class="btn" type="submit">Wyloguj</button>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 <div class="validate red-text center" th:if="${error}">
-    <span th:text="${error}"></span>
+    <h4 th:text="${error}"></h4>
+</div>
+<div class="green-text center" th:if="${message}">
+    <h4 th:text="${message}"></h4>
 </div>
 <section layout:fragment="content">
-    <p>Space for content</p>
 </section>
 <div class="nav-wrapper grey" style="position: fixed; bottom: 0; ">
     <span>
