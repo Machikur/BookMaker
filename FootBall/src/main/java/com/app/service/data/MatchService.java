@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,15 +39,16 @@ public class MatchService {
     public Set<Match> findAllByFinished(boolean finished) {
         return matchRepository.findAllByFinished(finished);
     }
+
     public Page<Match> findAllByFinished(boolean finished, Pageable pageable) {
-        return matchRepository.findAllByFinished(finished,pageable);
+        return matchRepository.findAllByFinishedOrderByDateOfMatchDesc(finished,pageable);
     }
 
     public Optional<Match> findById(Long id) {
         return matchRepository.findById(id);
     }
 
-    public long countAllByFinished(boolean finished) {
+    public int countAllByFinished(boolean finished) {
         return matchRepository.countAllByFinished(finished);
     }
 

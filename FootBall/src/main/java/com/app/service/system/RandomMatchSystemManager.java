@@ -29,22 +29,21 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomMatchSystemManager implements MatchSystemManager {
 
     private final static int MAX_NOT_FINISHED_MATCHES = 15;
-    private final static int START_HOUR_TIME = 10;
-    private final static int FINISH_HOUR_TIME = 20;
+    private final static int START_TIME_HOUR = 10;
+    private final static int FINISH_TIME_HOUR = 20;
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
     private final MatchService matchService;
     private final MatchManager matchManager;
     private final FootballClubService footballClubService;
 
     @PostConstruct
-    void createThreadsAfterStart() {
+    public void createThreadsAfterStart() {
         Set<Match> notFinishedMatches = matchService.findAllByFinished(false);
         notFinishedMatches.forEach(this::createThreadForMatch);
         manage();
     }
 
     @Override
-    @Scheduled(cron = "0/30 * * * * *")
     public void manage() {
         if (matchService.countAllByFinished(false) < MAX_NOT_FINISHED_MATCHES) {
             Match match = createRandomMatch();

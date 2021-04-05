@@ -34,6 +34,10 @@ public class TicketService {
         return ticketRepository.findById(id);
     }
 
+    public int countAllByUserId(Long userId){
+        return ticketRepository.countAllByUserId(userId);
+    }
+
     public Ticket saveTicket(Ticket ticket) {
         return ticketRepository.save(ticket);
     }

@@ -4,12 +4,10 @@ import com.app.domain.Match;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,10 +23,9 @@ public interface MatchRepository extends PagingAndSortingRepository<Match, Long>
 
     Set<Match> findAllByFinished(boolean finished);
 
-    Page<Match> findAllByFinished(boolean finished, Pageable pageable);
+    Page<Match> findAllByFinishedOrderByDateOfMatchDesc(boolean finished, Pageable pageable);
 
-    long countAllByFinished(boolean finished);
-
+    int countAllByFinished(boolean finished);
 
 
 }

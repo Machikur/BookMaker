@@ -1,23 +1,25 @@
-package com.app.service.system;
+package com.app.configuration;
 
 import com.app.domain.FootballClub;
 import com.app.domain.Player;
 import com.app.domain.PlayerPosition;
 import com.app.domain.Skills;
 import com.app.service.data.FootballClubService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Service
-@RequiredArgsConstructor
+@Configuration
 public class FakeData {
 
     private final FootballClubService footballClubService;
+
+    public FakeData(FootballClubService footballClubService) {
+        this.footballClubService = footballClubService;
+    }
 
     @PostConstruct
     void createData() {

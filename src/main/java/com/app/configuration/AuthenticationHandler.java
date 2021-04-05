@@ -28,5 +28,4 @@ public class AuthenticationHandler implements AuthenticationSuccessHandler {
         response.sendRedirect("/");
     }
 
-
 }

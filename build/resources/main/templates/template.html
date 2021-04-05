@@ -10,13 +10,13 @@
 <body class="blue-grey lighten-4">
 <div>
     <a th:href="@{/}">
-        <div class="nav-wrapper green white-text ">
-            <h2 class="center" style="  margin: 0 auto;">Witaj w internetowym bukmacherze
+        <div class="nav-wrapper green white-text z-depth-1" style="height: 55px">
+            <h3 class="center" style="  margin: 0 auto; text-shadow: 2px 2px 4px #000000">Witaj w internetowym bukmacherze
                 <span sec:authorize="isAuthenticated()">
                     <span sec:authentication="name"></span>
                     <span class="right" style="font-size: 15px" th:text="'Saldo : ' + ${#session.getAttribute('cash')+ 'zł'}"></span>
                 </span>
-            </h2>
+            </h3>
         </div>
     </a>
 </div>
@@ -52,12 +52,12 @@
 </div>
 <section layout:fragment="content">
 </section>
-<div class="nav-wrapper grey" style="position: fixed; bottom: 0; ">
+<footer class="nav-wrapper grey" style="position: fixed; bottom: 0; ">
     <span>
         Aplikacja wykonana przez
         <a href="https://github.com/Machikur">Machikur.</a>
         Wszystkie prawa zastrzeżone
     </span>
-</div>
+</footer>
 </body>
 </html>

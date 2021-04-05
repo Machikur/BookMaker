@@ -8,19 +8,16 @@ import java.net.URI;
 import java.util.Collections;
 
 @Component
-public class PlayersUrls {
-
-    @Value("${client.path}")
-    private String clientPath;
+public class PlayersUrls extends ClientUrl {
 
     public URI getPlayerById(Long id) {
-        return UriComponentsBuilder.fromHttpUrl(clientPath)
+        return UriComponentsBuilder.fromHttpUrl(clientUrl)
                 .path("player/{id}")
                 .build(Collections.singletonMap("id", id));
     }
 
     public URI getAllPlayerByClubId(Long id) {
-        return UriComponentsBuilder.fromHttpUrl(clientPath)
+        return UriComponentsBuilder.fromHttpUrl(clientUrl)
                 .path("player/club/{id}")
                 .build(Collections.singletonMap("id", id));
     }

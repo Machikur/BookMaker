@@ -21,8 +21,7 @@ public class PaymentController {
     }
 
     @GetMapping
-    public String getHistoryOfPayment(@RequestParam(required = false) Boolean positive,
-                                      Model model) {
+    public String getHistoryOfPayment(@RequestParam(required = false) Boolean positive, Model model) {
         Long accountId = activeUser.getAccount().getId();
         model.addAttribute("payments", paymentService.getPaymentsByAccountId(accountId, positive));
         return "user/payment";

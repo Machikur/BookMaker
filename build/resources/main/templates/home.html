@@ -8,7 +8,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1 class="center">Zaplanowane spotkania</h1>
+    <h1 class="center" style="text-shadow: 2px 2px 5px #FFFFFF;">Zaplanowane spotkania</h1>
     <div th:if="${matches}" th:each="match : ${matches}">
         <a th:href="@{/match/{id}(id=${match.getId()})}">
             <div class="row center-align green lighten-3 black-text"
@@ -19,8 +19,8 @@
                 <div class="right center-align">
                     <img style="height: 200px; width: 200px" th:src="${match.getOppositeTeam().getPictureUrl()}">
                 </div>
-                <div class="center center-align">
-                    <h3 th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
+                <div class="center center-align" >
+                    <h3 style="text-shadow: 2px 1px 2px #FFFFFF;" th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
                         Walczący</h3>
                     <div class="red-text">
                         <h5 th:text="${match.getDateOfMatch()}"></h5>

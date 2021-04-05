@@ -15,5 +15,6 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket, Lon
 
     Set<Ticket> findAllByUserIdAndDoneAndWonTicket(Long userId, boolean done, boolean won);
 
+    int countAllByUserId(Long userId);
 
 }

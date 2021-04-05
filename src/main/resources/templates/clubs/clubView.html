@@ -17,7 +17,7 @@
             <h4 th:text="${club.getShortName()}">Skrót</h4>
             <h4 th:text="'Siła klubu - '+ ${club.getPower()}"></h4>
         </div>
-        <div class="s4 col right center-align " th:with="stats=${club.getClubStatistics()}">
+        <div class="s4 col right center-align " style="text-shadow: 2px 1px 2px #FFFFFF;" th:with="stats=${club.getClubStatistics()}">
             <h4>Rozegrane Mecze</h4>
             <span th:text="${club.getClubStatistics().getTotal()}" w></span>
             <h4>Wygrane Mecze</h4>
@@ -28,7 +28,7 @@
             <span th:text="${stats.getDraws()}"></span>
         </div>
     </div>
-    <h2 class="center-align">Zawodnicy</h2>
+    <h2 class="center-align" style="text-shadow: 2px 2px 5px #FFFFFF;">Zawodnicy</h2>
     <div class="bottom row ">
         <div class="center-align " th:each="player:${club.getPlayers()}">
             <a th:href="@{/player/{id}(id=${player.getId()})}">
@@ -36,7 +36,7 @@
                      style=" margin: 20px;border: outset darkgreen; padding: 0;height: 350px;width: 320px">
                     <img alt="" style="width: max-content; max-width: 100%; height: max-content; max-height: 200px;"
                          th:src="${player.getPictureUrl()}">
-                    <div class="bottom">
+                    <div class="bottom" style="text-shadow: 2px 1px 2px #FFFFFF;">
                         <h4 th:text="${player.getFullName()}">Imię zawodnika</h4>
                         <span th:text="${player.getPosition().getTranslate()}">Pozycja</span>
                     </div>

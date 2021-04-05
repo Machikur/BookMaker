@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="center-align">
-            <h2>Zarejestruj się</h2>
+            <h2 style="text-shadow: 2px 2px 5px #FFFFFF;">Zarejestruj się</h2>
             <form class="s3" method="post" th:action="@{/user/register}" th:object="${user}">
                 <div class="input-field col s6">
                     <input  th:field="*{username}" id="username" name="username" placeholder="Username" required="required" type="text">

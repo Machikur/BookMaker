@@ -16,10 +16,15 @@ public class ActiveUser {
 
     private Account account;
 
+    private String picturePath;
+
     public void saveSession(User user) {
         this.userId = user.getId();
         this.userName = user.getUsername();
         this.account = user.getAccount();
+        if (user.getPicturePath() != null) {
+            this.picturePath = user.getPicturePath();
+        }
     }
 
 }

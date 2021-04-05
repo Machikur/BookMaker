@@ -8,13 +8,10 @@ import java.net.URI;
 import java.util.Collections;
 
 @Component
-public class MatchUrls {
-
-    @Value("${client.path}")
-    private String clientPath;
+public class MatchUrls extends ClientUrl {
 
     public URI getAllMatchesByFinished(boolean finished) {
-        return UriComponentsBuilder.fromHttpUrl(clientPath)
+        return UriComponentsBuilder.fromHttpUrl(clientUrl)
                 .path("match")
                 .queryParam("isFinished", finished)
                 .build()
@@ -22,7 +19,7 @@ public class MatchUrls {
     }
 
     public URI getAllMatchesByFinished(boolean finished, int page) {
-        return UriComponentsBuilder.fromHttpUrl(clientPath)
+        return UriComponentsBuilder.fromHttpUrl(clientUrl)
                 .path("match")
                 .queryParam("isFinished", finished)
                 .queryParam("page", page)
@@ -31,7 +28,7 @@ public class MatchUrls {
     }
 
     public URI getMatchById(long matchId) {
-        return UriComponentsBuilder.fromHttpUrl(clientPath)
+        return UriComponentsBuilder.fromHttpUrl(clientUrl)
                 .path("match/{matchId}")
                 .build(Collections.singletonMap("matchId", matchId));
     }

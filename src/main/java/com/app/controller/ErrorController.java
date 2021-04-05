@@ -17,7 +17,7 @@ public class ErrorController {
         return getErrorPage(ex, "Wystąpił błąd w połaczeniu, spróbuj ponownie za chwilke");
     }
 
-    @ExceptionHandler()
+    @ExceptionHandler(HttpClientErrorException.class)
     public ModelAndView catchClientError(HttpClientErrorException ex) {
         return getErrorPage(ex, "Wybrany zasób nie istnieje");
     }

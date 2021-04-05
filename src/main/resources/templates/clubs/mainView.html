@@ -9,7 +9,7 @@
 <body>
 <div layout:fragment="content">
     <div>
-        <div th:each="club,row : ${clubs}">
+        <div th:each="club,row : ${clubs}" style="text-shadow: 2px 2px 5px #FFFFFF;">
             <a th:href="@{/club/{id}(id=${club.getId()})}">
                 <div class="s9 center-align green lighten-3 black-text"
                      style=" margin: 40px 200px;border: outset darkgreen;">
