@@ -17,7 +17,8 @@
             <h4 th:text="${club.getShortName()}">Skrót</h4>
             <h4 th:text="'Siła klubu - '+ ${club.getPower()}"></h4>
         </div>
-        <div class="s4 col right center-align " style="text-shadow: 2px 1px 2px #FFFFFF;" th:with="stats=${club.getClubStatistics()}">
+        <div class="s4 col right center-align " style="text-shadow: 2px 1px 2px #FFFFFF;"
+             th:with="stats=${club.getClubStatistics()}">
             <h4>Rozegrane Mecze</h4>
             <span th:text="${club.getClubStatistics().getTotal()}" w></span>
             <h4>Wygrane Mecze</h4>

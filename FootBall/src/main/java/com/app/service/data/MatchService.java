@@ -1,6 +1,7 @@
 package com.app.service.data;
 
 import com.app.domain.*;
+import com.app.exception.MatchNotFoundException;
 import com.app.repository.MatchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,8 +42,13 @@ public class MatchService {
         return matchRepository.findAllByFinished(finished);
     }
 
+    public Optional<Match> findNext(){
+        return matchRepository.findAllByFinished(false).stream()
+                .min(Comparator.comparing(Match::getDateOfMatch).thenComparing(Match::getStartTime));
+    }
+
     public Page<Match> findAllByFinished(boolean finished, Pageable pageable) {
-        return matchRepository.findAllByFinishedOrderByDateOfMatchDesc(finished,pageable);
+        return matchRepository.findAllByFinishedOrderByDateOfMatchDesc(finished, pageable);
     }
 
     public Optional<Match> findById(Long id) {

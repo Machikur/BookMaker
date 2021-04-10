@@ -25,8 +25,8 @@
                 <form method="post" th:action="@{/ticket/new(winner=${win.name()})}" th:object="${ticket}">
                     <div class="row center-align" style="margin:auto 35%">
                         <div class="center col s12" style="max-width: 130px">
-                            <input style=" background: white" id="quote" min="0" name="quote" required="required"
-                                   step="0.01"
+                            <input id="quote" min="0" name="quote" required="required" step="0.01"
+                                   style=" background: white"
                                    th:field="${ticket.quote}" type="number">
                             <label for="quote" style="font-size: 15px">Stawka</label>
                         </div>

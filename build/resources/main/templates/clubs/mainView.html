@@ -8,16 +8,16 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div>
+    <div class="container row">
         <div th:each="club,row : ${clubs}">
-            <a th:href="@{/club/{id}(id=${club.getId()})}">
-                <div class="s9 center-align green lighten-3 black-text"
-                     style=" margin: 40px 200px;border: outset darkgreen;">
-                    <img style=" width:122px;height:122px;" th:src="${club.getPictureUrl()}">
-                    <h2 th:text="${club.getName()}">Nazwa klubu</h2>
-                    <h4 th:text="${club.getShortName()}">Skrót</h4>
+            <div class="col card clubCard" style="width: 18rem;">
+                <img class="card-img-top" th:src="${club.getPictureUrl()}">
+                <div class="card-body">
+                    <h3 class="card-title white-text" th:text="${club.getName()}"></h3>
+                    <form method="get" th:action="@{/club/{id}(id=${club.getId()})}"></form>
+                    <button type="button" class="btn btn-secondary">Podglad</button>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 </div>

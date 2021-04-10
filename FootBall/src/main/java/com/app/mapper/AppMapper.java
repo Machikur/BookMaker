@@ -66,7 +66,7 @@ public class AppMapper {
         return new ClubStatisticsDto(statistics.getId(), statistics.getWinners(), statistics.getLosers(), statistics.getDraws());
     }
 
-    public static Page<MatchDto> mapToMatchDtoPage(Page<Match> matchPage){
+    public static Page<MatchDto> mapToMatchDtoPage(Page<Match> matchPage) {
         return matchPage.map(AppMapper::mapToDto);
     }
 

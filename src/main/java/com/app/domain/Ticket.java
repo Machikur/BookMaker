@@ -2,13 +2,11 @@ package com.app.domain;
 
 import com.app.client.domain.Winner;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -55,11 +53,11 @@ public class Ticket {
 
     private LocalTime matchTime;
 
-    private String result=null;
+    private String result = null;
 
     public String getFormattedTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.of(matchDate,matchTime).format(formatter);
+        return LocalDateTime.of(matchDate, matchTime).format(formatter);
     }
 
 }

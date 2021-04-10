@@ -2,8 +2,6 @@ package com.app.client.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.PageImpl;
 
 import java.util.Collection;
 

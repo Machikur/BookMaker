@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User saveNewUser(User user) throws UserServiceException {
-        if (repository.findByUsername(user.getUsername()).isPresent()){
+        if (repository.findByUsername(user.getUsername()).isPresent()) {
             throw new UserServiceException("Podane nazwa użytkownika już istnieje");
         }
         user.setPassword(encoder.encode(user.getPassword()));

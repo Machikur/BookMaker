@@ -34,7 +34,7 @@ public class TicketService {
         return ticketRepository.findById(id);
     }
 
-    public int countAllByUserId(Long userId){
+    public int countAllByUserId(Long userId) {
         return ticketRepository.countAllByUserId(userId);
     }
 
@@ -95,7 +95,6 @@ public class TicketService {
         ticket.setResult(match.getResult());
         return saveTicket(ticket);
     }
-
 
     private void payAndSetWon(Ticket ticket, Account account) {
         Payment payment = new Payment(account, ticket.getQuote(), true);

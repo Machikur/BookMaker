@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="styles.css">
+    <title>Strona główna</title>
+    <script type="text/javascript">
+        function timerJob() {
+            var today = new Date();
+            var hour = today.getHours();
+            var minute = today.getMinutes();
+            if (minute < 10) minute = "0" + minute;
+            var second = today.getSeconds();
+            if (second < 10) second = "0" + second;
+            document.getElementById("timer").innerHTML = +hour + ":" + minute + ":" + second;
+            setTimeout(timerJob, 1000);
+        }
+    </script>
+</head>
+<body onload="timerJob();">
+<div class="top">
+    <div>
+        <span id="timer" class="timer">Czas</span>
+    </div>
+    <div class="text-center">
+        <a href="#"><h3 class="center">Witaj w internetowym
+            bukmacherze
+            <span sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name"></span>
+                    <span class="right"
+                          th:text="'Saldo : ' + ${#session.getAttribute('cash')+ 'zł'}"></span>
+                </span>
+        </h3></a>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-5 m-3">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+            <li class="nav-item"><a class="nav-link active" th:href="@{/}">Aktualne Rozgrywki</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/club}">Kluby Piłkarskie</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/ticket}">Twoje Zakłady</a></li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+        <ul  sec:authorize="!isAuthenticated()" class="navbar-nav right">
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Rejestracja</a>
+            </li>
+        </ul>
+        <form sec:authorize="!isAuthenticated()" class="form-inline my-2 my-lg-0">
+            <label for="username"></label>
+            <input id="username" class="form-control mr-sm-2" type="text" placeholder="Login">
+            <label for="password"></label>
+            <input id="password" class="form-control mr-sm-2" type="text" placeholder="Hasło">
+            <button class="btn btn-light my-2 my-sm-0" type="submit">Zaloguj</button>
+        </form>
+    </div>
+</nav>
+<main class="d-flex flex-row justify-content-between h-auto mb-auto mt-5 mr-5 ">
+    <div class="validate red-text center" th:if="${error}">
+        <h4 class="alert" th:text="${error}"></h4>
+    </div>
+    <div class="green-text center" th:if="${message}">
+        <h4 th:text="${message}"></h4>
+    </div>
+    <nav class="nav bg-info justify-content-start  bg-dark rounded h-75  pl-2 pr-2 pb-2 mt-5" layout:fragment="sidebar">
+        <ul class="list-group serif ">
+            <li class="list-group-item ">Cras justo odio</li>
+            <li class="list-group-item ">Dapibus ac facilisis in</li>
+            <li class="list-group-item ">Morbi leo risus</li>
+            <li class="list-group-item ">Porta ac consectetur ac</li>
+            <li class="list-group-item ">Vestibulum at eros</li>
+        </ul>
+    </nav>
+    <section class="col col-10 text-center ml-2" layout:fragment="content">
+    </section>
+</main>
+<footer class="blockquote-footer">Koniec</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

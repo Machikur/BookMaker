@@ -1,6 +1,5 @@
 package com.app.client.urlbuilder;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,6 +30,13 @@ public class MatchUrls extends ClientUrl {
         return UriComponentsBuilder.fromHttpUrl(clientUrl)
                 .path("match/{matchId}")
                 .build(Collections.singletonMap("matchId", matchId));
+    }
+
+    public URI getNextMatch() {
+        return UriComponentsBuilder.fromHttpUrl(clientUrl)
+                .path("match/next")
+                .build()
+                .toUri();
     }
 
 }

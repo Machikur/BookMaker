@@ -7,33 +7,37 @@
     <title>Strona głowna</title>
 </head>
 <body>
-<div layout:fragment="content">
-    <h1 class="center" style="text-shadow: 2px 2px 5px #FFFFFF;">Zaplanowane spotkania</h1>
-    <div th:if="${matches}" th:each="match : ${matches}">
-        <a th:href="@{/match/{id}(id=${match.getId()})}">
-            <div class="row center-align green lighten-3 black-text"
-                 style=" margin: 40px 200px;border: outset darkgreen;">
-                <div class="left center-align">
-                    <img style="height: 200px; width: 200px" th:src="${match.getHostTeam().getPictureUrl()}">
-                </div>
-                <div class="right center-align">
-                    <img style="height: 200px; width: 200px" th:src="${match.getOppositeTeam().getPictureUrl()}">
-                </div>
-                <div class="center center-align" >
-                    <h3 style="text-shadow: 2px 1px 2px #FFFFFF;" th:text="${match.getHostTeam().getName()} + ' vs ' + ${match.getOppositeTeam().getName()} ">
-                        Walczący</h3>
-                    <div class="red-text">
-                        <h5 th:text="${match.getDateOfMatch()}"></h5>
-                        <h5 th:text="${match.getFinishTime()}"></h5></div>
-                </div>
-
-            </div>
-        </a>
+<div layout:fragment="content" class="match-wrapper" onload="setTimer()">
+    <h1 class="mh-auto">Następne spotkanie</h1>
+    <div class=" row">
+        <div class="col mh-auto">
+            <img class=" col d-block w-100"
+                 th:src="${match.getHostTeam().getPictureUrl()}">
+            <h3 th:text="${match.getHostTeam().getName()}"></h3>
+        </div>
+        <div class="col col-4 mh-auto">
+            <h4> Pozostało do końca</h4>
+            <span id="timeCounter" class="big-text h-auto">
+                <span id="hours" th:text="${time.hours}"></span>
+                <span>:</span>
+                <span id="minutes" th:text="${time.minutes}"></span>
+                <span>:</span>
+                <span id="seconds" th:text="${time.seconds}"></span>
+            </span>
+            <form sec:authorize="isAuthenticated()" method="get" th:action="@{/ticket/new}" th:object="${match}">
+                <button id="ticketButton" class="btn btn-secondary btn-lg mt-3" type="submit">Obstaw mecz</button>
+            </form>
+        </div>
+        <div class="col mh-auto">
+            <img class=" col d-block w-100" th:src="${match.getOppositeTeam().getPictureUrl()}">
+            <h3 th:text="${match.getOppositeTeam().getName()}"></h3>
+        </div>
     </div>
 </div>
-<div th:if="${!matches}">
+<a th:href="@{/match/{id}(id=${match.getId()})}"></a>
+
+<div th:if="${!match}">
     <h2 class="validate red-text">Brak nadchodzących spotkań</h2>
 </div>
-
 </body>
 </html>

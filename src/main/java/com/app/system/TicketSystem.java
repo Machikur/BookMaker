@@ -23,8 +23,9 @@ public class TicketSystem implements TicketManager {
                 return baseCounter + different;
             case DRAW:
                 return different < 0 ? baseCounter + different / 2 : baseCounter - different / 2;
+            default:
+                throw new RuntimeException();
         }
-        throw new RuntimeException();
     }
 
     @Override

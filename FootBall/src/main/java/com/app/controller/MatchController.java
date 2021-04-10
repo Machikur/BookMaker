@@ -32,6 +32,12 @@ public class MatchController {
         return buildResponseEntity(AppMapper.mapToMatchListDto(matches));
     }
 
+    @GetMapping("/next")
+    public ResponseEntity<MatchDto> findNextMatch(){
+       return matchService.findNext().map(match -> ResponseEntity.ok(AppMapper.mapToDto(match)))
+               .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/date")
     public ResponseEntity<Collection<MatchDto>> findAllByDateOfMatch(@RequestParam LocalDate dateOfMatch) {
         Collection<Match> matches = matchService.findAllByDateOfMatch(dateOfMatch);
@@ -39,8 +45,7 @@ public class MatchController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<MatchDto>> findAllFinished(@RequestParam Boolean isFinished,
-                                                          @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<MatchDto>> findAllFinished(@RequestParam Boolean isFinished, @RequestParam(defaultValue = "0") int page) {
         Page<Match> matchesPage = matchService.findAllByFinished(isFinished, PageRequest.of(page, 10));
         return matchesPage.getSize() != 0 ? ResponseEntity.ok(matchesPage.map(AppMapper::mapToDto)) : ResponseEntity.notFound().build();
     }

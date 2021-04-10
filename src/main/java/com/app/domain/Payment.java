@@ -39,8 +39,8 @@ public class Payment {
     }
 
     @PrePersist
-    void setPayTime(){
-        this.payTime=LocalDateTime.now();
+    void setPayTime() {
+        this.payTime = LocalDateTime.now();
     }
 
     public String getFormattedTime() {

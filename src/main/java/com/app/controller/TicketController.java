@@ -2,10 +2,10 @@ package com.app.controller;
 
 import com.app.client.domain.MatchDto;
 import com.app.client.domain.Winner;
-import com.app.exception.NotEnoughCashException;
-import com.app.exception.TicketException;
 import com.app.domain.ActiveUser;
 import com.app.domain.Ticket;
+import com.app.exception.NotEnoughCashException;
+import com.app.exception.TicketException;
 import com.app.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +34,19 @@ public class TicketController {
     }
 
     @GetMapping("/done")
-    public String getFilteredMainView(@RequestParam Boolean won,Model model){
+    public String getFilteredMainView(@RequestParam Boolean won, Model model) {
         model.addAttribute("activeTickets", ticketService.findAllDoneByUserIdAndWonTicket(activeUser.getUserId(), won));
         return "user/mainView";
     }
 
     @GetMapping("/check")
-    public String checkTicket(@RequestParam Long id, Model model, RedirectAttributes attributes,HttpServletRequest request){
+    public String checkTicket(@RequestParam Long id, Model model, RedirectAttributes attributes, HttpServletRequest request) {
         try {
             Ticket result = ticketService.checkTicket(ticketService.findById(id).get(), activeUser.getAccount());
             model.addAttribute("ticket", result);
             updateAccountBalance(request);
-        }
-        catch (TicketException s){
-            attributes.addFlashAttribute("error",s.getMessage());
+        } catch (TicketException s) {
+            attributes.addFlashAttribute("error", s.getMessage());
         }
         return "redirect:/ticket";
     }
@@ -62,21 +61,20 @@ public class TicketController {
 
     @PostMapping("/new")
     public String createNewTicket(@ModelAttribute("ticket") Ticket ticket, @RequestParam Winner winner,
-                                  RedirectAttributes redirectAttributes,HttpServletRequest request){
+                                  RedirectAttributes redirectAttributes, HttpServletRequest request) {
         ticket.setGuessedWinner(winner);
         try {
             ticketService.validateTicketSaveAndCreatePayment(ticket, activeUser.getAccount());
             updateAccountBalance(request);
-        }
-        catch (TicketException | NotEnoughCashException ex){
-            redirectAttributes.addFlashAttribute("error",ex.getMessage());
+        } catch (TicketException | NotEnoughCashException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
             return "redirect:/";
         }
         return "redirect:/ticket";
     }
 
-    private void updateAccountBalance(HttpServletRequest request){
-        request.getSession().setAttribute("cash",activeUser.getAccount().getCash());
+    private void updateAccountBalance(HttpServletRequest request) {
+        request.getSession().setAttribute("cash", activeUser.getAccount().getCash());
     }
 
 }

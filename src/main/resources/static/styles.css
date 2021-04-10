@@ -1,0 +1,78 @@
+a:hover {
+    text-decoration: none;
+}
+
+.serif {
+    font-family: Verdana, sans-serif;
+}
+
+.mh-auto {
+    text-align: center;
+}
+
+.match-wrapper {
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    margin: 0 auto auto auto;
+    padding: 5px;
+    border-radius: 50px;
+    opacity: 0.9;
+}
+
+.navbar, nav {
+    box-shadow: 2px 2px 5px white;
+}
+
+.black-pad {
+    color: black;
+    padding: 5px 10px 0 10px;
+}
+
+.white-shadow {
+    color: black;
+    text-shadow: 2px 2px 2px white;
+}
+
+.no-dec:hover {
+    text-decoration: none;
+}
+
+body {
+    background-image: url("background.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+main {
+    min-height: 800px;
+}
+
+.list-group-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid gray;
+}
+
+.list-group-item {
+    border-radius: 5px;
+}
+
+.list-group-item:hover {
+    background: #696969;
+    color: white;
+}
+
+.big-text {
+    font-size: 20px;
+}
+
+.h-auto {
+    height: 10%;
+}
+
+.clubCard {
+    margin: 30px;
+    background-image: none !important;
+    background-color: inherit !important;
+    border: none !important;
+}

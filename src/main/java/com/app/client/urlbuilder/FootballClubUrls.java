@@ -1,6 +1,5 @@
 package com.app.client.urlbuilder;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 

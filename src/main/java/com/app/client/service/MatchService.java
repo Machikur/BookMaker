@@ -20,7 +20,12 @@ public class MatchService {
 
 
     public PageWrapper findAllByFinished(boolean finished, int page) {
-        ResponseEntity<PageWrapper> result = restTemplate.getForEntity(matchUrls.getAllMatchesByFinished(finished,page), PageWrapper.class);
+        ResponseEntity<PageWrapper> result = restTemplate.getForEntity(matchUrls.getAllMatchesByFinished(finished, page), PageWrapper.class);
+        return result.getBody();
+    }
+
+    public MatchDto findFirstMatchInTheQue(){
+        ResponseEntity<MatchDto> result = restTemplate.getForEntity(matchUrls.getNextMatch(), MatchDto.class);
         return result.getBody();
     }
 

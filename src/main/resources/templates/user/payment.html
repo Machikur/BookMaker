@@ -25,14 +25,15 @@
             <table class=" center-align" style="max-width: 50%;margin:  20px auto; border:1px solid black;">
                 <thead>
                 <tr>
-                    <th> </th>
+                    <th></th>
                     <th>Data</th>
                     <th>Kwota</th>
                     <th>Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr  style="border: 1px solid black" th:each=" payment,rowStat:${payments}" th:class="${payment.positive}? 'green lighten-3':'red lighten-3' ">
+                <tr style="border: 1px solid black" th:class="${payment.positive}? 'green lighten-3':'red lighten-3' "
+                    th:each=" payment,rowStat:${payments}">
                     <td th:text="${rowStat.index} + 1 + '.'"></td>
                     <td th:text="${payment.getFormattedTime()}"></td>
                     <td th:text="${payment.amount} + 'zł'"></td>

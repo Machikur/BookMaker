@@ -1,63 +1,97 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-    <title>Title</title>
-    <link href="/webjars/materializecss/1.0.0/css/materialize.css" media="all" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{styles.css}" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </head>
-<body class="blue-grey lighten-4">
-<div>
-    <a th:href="@{/}">
-        <div class="nav-wrapper green white-text z-depth-1" style="height: 55px">
-            <h3 class="center" style="  margin: 0 auto; text-shadow: 2px 2px 4px #000000">Witaj w internetowym bukmacherze
-                <span sec:authorize="isAuthenticated()">
-                    <span sec:authentication="name"></span>
-                    <span class="right" style="font-size: 15px" th:text="'Saldo : ' + ${#session.getAttribute('cash')+ 'zł'}"></span>
-                </span>
-            </h3>
-        </div>
-    </a>
+<body>
+<div class="top">
+    <div class="d-flex justify-content-between p-2">
+        <span id="timer" class="black-pad">Czas</span>
+        <span class="black-pad" sec:authorize="isAuthenticated()"
+              th:text="'Saldo : ' + ${#session.getAttribute('cash')+ 'zł'}">
+        </span>
+    </div>
+    <div class="text-center">
+        <a class="no-dec" th:href="@{/}"><h3 class="white-shadow">Witaj w internetowym bukmacherze
+            <span sec:authorize="isAuthenticated()" sec:authentication="name">
+                    </span>
+        </h3></a>
+    </div>
 </div>
-<nav>
-    <div class="nav-wrapper blue-grey">
-        <div class="row" sec:authorize="!isAuthenticated()">
-            <ul class="right">
-                <li class="col "><a th:href="@{/login}">Zaloguj</a></li>
-                <li class="col "><a th:href="@{/user/register}">Rejestracja</a></li>
-            </ul>
-        </div>
-        <div sec:authorize="isAuthenticated()">
-            <ul class="left " id="nav-left">
-                <li><a th:href="@{/}">Aktualne Rozgrywki</a></li>
-                <li><a th:href="@{/club}">Kluby Piłkarskie</a></li>
-                <li><a th:href="@{/ticket}">Twoje Zakłady</a></li>
-            </ul>
-            <ul class="right">
-                <li class="col l2">
-                    <form method="post" name="logout" th:action="@{/logout}">
-                        <button class="btn" type="submit">Wyloguj</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-5 m-3 rounded">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+            <li class="nav-item"><a class="nav-link " th:href="@{/}">Stron główna</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/club}">Kluby Piłkarskie</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Profil
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item"  th:href="@{/ticket}">Twoje zakłady</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Edytuj profil</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" sec:authorize="!isAuthenticated()">
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Rejestracja</a>
+            </li>
+        </ul>
+        <form method="post" th:action="@{/login}" class="form-inline my-2 my-lg-0 ml-0 right"
+              sec:authorize="!isAuthenticated()">
+            <label for="username"></label>
+            <input id="username" name="username" class="form-control mr-sm-2" type="text" placeholder="Login"
+                   required="required">
+            <label for="password"></label>
+            <input id="password" name="password" class="form-control mr-sm-2" type="password" placeholder="Hasło"
+                   required="required">
+            <button class="btn btn-light my-2 my-sm-0" type="submit">Zaloguj</button>
+        </form>
     </div>
 </nav>
-<div class="validate red-text center" th:if="${error}">
-    <h4 th:text="${error}"></h4>
-</div>
-<div class="green-text center" th:if="${message}">
-    <h4 th:text="${message}"></h4>
-</div>
-<section layout:fragment="content">
-</section>
-<footer class="nav-wrapper grey" style="position: fixed; bottom: 0; ">
-    <span>
-        Aplikacja wykonana przez
-        <a href="https://github.com/Machikur">Machikur.</a>
-        Wszystkie prawa zastrzeżone
-    </span>
-</footer>
+<main class="d-flex flex-row justify-content-between h-auto mb-auto mt-5 mr-5 ">
+    <div class="validate red-text center" th:if="${error}">
+        <h4 class="alert" th:text="${error}"></h4>
+    </div>
+    <div class="green-text center" th:if="${message}">
+        <h4 th:text="${message}"></h4>
+    </div>
+    <nav class="nav bg-info justify-content-start  bg-dark rounded h-75  pl-2 pr-2 pb-2 mt-5" layout:fragment="sidebar">
+        <ul class="list-group serif ">
+            <li class="list-group-item ">Opcja 1</li>
+            <li class="list-group-item ">Opcja 2</li>
+            <li class="list-group-item ">0pcja 3</li>
+            <li class="list-group-item ">0pcja 4</li>
+            <li class="list-group-item ">0pcja 5</li>
+        </ul>
+    </nav>
+    <section class="col col-10 text-center ml-2" layout:fragment="content">
+    </section>
+</main>
+<footer class="blockquote-footer">Koniec</footer>
+<script type="text/javascript" src="/static/js.js" th:src="@{js.js}"></script>
+<script>
+    timerJob();
+    setTimer();
+</script>
 </body>
 </html>
