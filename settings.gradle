@@ -1,1 +1,3 @@
-rootProject.name = 'BookMaker'
+rootProject.name = 'BookMakerProject'
+include 'BookMaker'
+include 'FootBall'

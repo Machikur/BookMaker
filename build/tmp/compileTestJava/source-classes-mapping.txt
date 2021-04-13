@@ -1,2 +1,0 @@
-com/app/AppApplicationTests.java
- com.app.AppApplicationTests

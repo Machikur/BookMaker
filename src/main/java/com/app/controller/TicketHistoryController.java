@@ -2,6 +2,7 @@ package com.app.controller;
 
 import com.app.client.domain.MatchDto;
 import com.app.client.domain.Winner;
+import com.app.client.service.MatchService;
 import com.app.domain.ActiveUser;
 import com.app.domain.Ticket;
 import com.app.exception.NotEnoughCashException;
@@ -16,26 +17,29 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/ticket")
-@SessionAttributes({"match", "ticket"})
+@SessionAttributes("ticket")
 public class TicketController {
 
     private final TicketService ticketService;
+    private final MatchService matchService;
     private ActiveUser activeUser;
 
-    public TicketController(TicketService ticketService, ActiveUser activeUser) {
+    public TicketController(TicketService ticketService, MatchService matchService, ActiveUser activeUser) {
         this.ticketService = ticketService;
+        this.matchService = matchService;
         this.activeUser = activeUser;
     }
 
     @GetMapping
-    public String getMainView(@RequestParam(required = false) Boolean done, Model model) {
-        model.addAttribute("activeTickets", ticketService.findAllByUserIdAndDone(activeUser.getUserId(), done));
-        return "user/mainView";
-    }
-
-    @GetMapping("/done")
-    public String getFilteredMainView(@RequestParam Boolean won, Model model) {
-        model.addAttribute("activeTickets", ticketService.findAllDoneByUserIdAndWonTicket(activeUser.getUserId(), won));
+    public String getMainView(@RequestParam(required = false) Boolean done,
+                              @RequestParam(required = false) Boolean won,
+                              Model model) {
+        if (won!=null){
+            model.addAttribute("activeTickets", ticketService.findAllDoneByUserIdAndWonTicket(activeUser.getUserId(), won));
+        }
+        else {
+            model.addAttribute("activeTickets", ticketService.findAllByUserIdAndDone(activeUser.getUserId(), done));
+        }
         return "user/mainView";
     }
 
@@ -52,7 +56,8 @@ public class TicketController {
     }
 
     @GetMapping("/new")
-    public String newTicketView(@ModelAttribute("match") MatchDto match, Model model) {
+    public String newTicketView(@RequestParam Long matchId, Model model) {
+        MatchDto match= matchService.findById(matchId);
         model.addAttribute("ticket", ticketService.createTicketForMatch(match, activeUser.getUserId()));
         model.addAttribute("multipliers", ticketService.getMultipliersForMatch(match));
         model.addAttribute("winners", Winner.values());
@@ -60,9 +65,8 @@ public class TicketController {
     }
 
     @PostMapping("/new")
-    public String createNewTicket(@ModelAttribute("ticket") Ticket ticket, @RequestParam Winner winner,
+    public String createNewTicket(@ModelAttribute("ticket") Ticket ticket,
                                   RedirectAttributes redirectAttributes, HttpServletRequest request) {
-        ticket.setGuessedWinner(winner);
         try {
             ticketService.validateTicketSaveAndCreatePayment(ticket, activeUser.getAccount());
             updateAccountBalance(request);
