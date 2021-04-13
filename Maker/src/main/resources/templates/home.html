@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona głowna</title>
+</head>
+<body>
+<div class="zero-size" layout:fragment="sidebar"></div>
+<div class="shadow-wrapper" layout:fragment="content">
+    <h1 class="mh-auto">Następne spotkanie</h1>
+    <div class="container row">
+        <div class="col mh-auto">
+            <img class=" col d-block w-100"
+                 th:src="${match.getHostTeam().getPictureUrl()}">
+            <h3 th:text="${match.getHostTeam().getName()}"></h3>
+        </div>
+        <div class="col col-4 mh-auto">
+            <h4> Pozostało do końca</h4>
+            <span class="big-text h-auto" id="timeCounter">
+                <span id="hours" th:text="${time.hours}"></span>
+                <span>:</span>
+                <span id="minutes" th:text="${time.minutes}"></span>
+                <span>:</span>
+                <span id="seconds" th:text="${time.seconds}"></span>
+            </span>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/ticket(matchId=${match.getId()})}">
+                    <button class="btn btn-secondary btn-lg mt-3" id="ticketButton" type="button">Obstaw mecz</button>
+                </a>
+            </div>
+        </div>
+        <div class="col mh-auto">
+            <img class=" col d-block w-100" th:src="${match.getOppositeTeam().getPictureUrl()}">
+            <h3 th:text="${match.getOppositeTeam().getName()}"></h3>
+        </div>
+    </div>
+</div>
+<div th:if="${!match}">
+    <h2 class="validate red-text">Brak nadchodzących spotkań</h2>
+</div>
+</body>
+</html>

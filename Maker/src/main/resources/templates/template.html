@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet" th:href="@{styles.css}" type="text/css">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet"/>
+    <title></title>
+    <script crossorigin="anonymous"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="d-flex justify-content-between p-2">
+        <span class="black-pad" id="timer">Czas</span>
+        <span class="black-pad" sec:authorize="isAuthenticated()"
+              th:text="'Saldo : ' + ${#session.getAttribute('cash')+ 'zł'}">
+        </span>
+    </div>
+    <div class="text-center">
+        <a class="no-dec" th:href="@{/}"><h3 class="white-shadow">Witaj w internetowym bukmacherze
+            <span sec:authentication="name" sec:authorize="isAuthenticated()">
+                    </span>
+        </h3></a>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-5 m-3 rounded">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link " th:href="@{/}">Stron główna</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/club}">Kluby Piłkarskie</a></li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                   id="navbarDropdown" role="button">Profil
+                </a>
+                <div aria-labelledby="navbarDropdown" class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/tickets}">Twoje zakłady</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Edytuj profil</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-0">
+            <li class="nav-item ">
+                <a class="nav-link" href="#" sec:authorize="!isAuthenticated()">Rejestracja</a>
+                <form class="form-inline my-2 my-lg-0 ml-0 right" method="post" sec:authorize="isAuthenticated()"
+                      th:action="@{/logout}">
+                    <button class="btn btn-light my-2 my-sm-0" type="submit">Wyloguj</button>
+                </form>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 ml-0 right" method="post" sec:authorize="!isAuthenticated()"
+              th:action="@{/login}">
+            <label for="username"></label>
+            <input class="form-control mr-sm-2" id="username" name="username" placeholder="Login" required="required"
+                   type="text">
+            <label for="password"></label>
+            <input class="form-control mr-sm-2" id="password" name="password" placeholder="Hasło" required="required"
+                   type="password">
+            <button class="btn btn-light my-2 my-sm-0" type="submit">Zaloguj</button>
+        </form>
+    </div>
+</nav>
+<main class="d-flex flex-row justify-content-between h-auto mb-auto mt-5 mr-5 ml-2 ">
+    <div class="validate red-text center" th:if="${error}">
+        <input id="error" th:value="${error}" type="hidden">
+        <script>
+            alert(document.getElementById("error").value)
+        </script>
+    </div>
+    <div class="green-text center" th:if="${message}">
+        <input id="message" th:value="${message}" type="hidden">
+        <script>
+            alert(document.getElementById("message").value)
+        </script>
+    </div>
+    <nav class="nav bg-info justify-content-start sidebar bg-dark rounded h-75 pl-2 pr-2 pb-2 mt-5"
+         layout:fragment="sidebar">
+    </nav>
+    <section class="col col-10 text-center" layout:fragment="content">
+    </section>
+</main>
+<footer class="blockquote-footer">Koniec</footer>
+<script src="/static/js.js" th:src="@{js.js}" type="text/javascript"></script>
+<script>
+    timerJob();
+    setTimer();
+</script>
+</body>
+</html>

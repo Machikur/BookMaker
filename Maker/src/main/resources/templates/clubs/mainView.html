@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Aktywne kluby</title>
+</head>
+<body>
+<div class="zero-size" layout:fragment="sidebar"></div>
+<div layout:fragment="content">
+    <div class="container row d-flex justify-content-around w-auto">
+        <div th:each="club,row : ${clubs}">
+            <div class="col card clubCard" style="width: 18rem;">
+                <img class="card-img-top" th:src="${club.getPictureUrl()}">
+                <div class="card-body">
+                    <h3 class="card-title white-shadow" th:text="${club.getName()}"></h3>
+                    <form method="get" th:action="@{/club/{id}(id=${club.getId()})}">
+                        <button class="btn btn-secondary" type="button">Podglad</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

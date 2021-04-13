@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html layout:decorator="~{template.html}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ostatnie zakłady</title>
+</head>
+<body>
+<nav layout:fragment="sidebar">
+    <ul class="list-group serif ">
+        <a class="no-dec black-text" th:href="@{/tickets}">
+            <li class="list-group-item ">Wszystkie</li>
+        </a>
+        <a class="no-dec black-text" th:href="@{/tickets(done=false)}">
+            <li class="list-group-item ">Oczekujące</li>
+        </a>
+        <a class="no-dec black-text" th:href="@{/tickets(done=true)}">
+            <li class="list-group-item ">Skończone</li>
+        </a>
+        <a class="no-dec black-text" th:href="@{/tickets(done=true,won=true)}">
+            <li class="list-group-item ">Wygrane</li>
+        </a>
+        <a class="no-dec black-text" th:href="@{/tickets(done=true,won=false)}">
+            <li class="list-group-item ">Przegrane</li>
+        </a>
+    </ul>
+</nav>
+
+<div layout:fragment="content">
+
+    <table class=" table table-striped table-dark">
+        <thead>
+        <tr>
+            <th>Gospodarz</th>
+            <th>Oponent</th>
+            <th>Postawiono na</th>
+            <th>Postawione pieniądze</th>
+            <th>Pieniądze do wygrania</th>
+            <th>Dnia</th>
+            <th>Wyniki</th>
+            <th>Akcja</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" ticket:${activeTickets}">
+            <td th:text="${ticket.hostTeam}"></td>
+            <td th:text="${ticket.opTeam}"></td>
+            <td th:text="${ticket.guessedWinner}"></td>
+            <td th:text="${ticket.quote}"></td>
+            <td th:text="${ticket.quoteToWin}"></td>
+            <td th:text="${ticket.matchDate}"></td>
+            <td th:text="${ticket.result}? ${ticket.result}: ${ticket.getFormattedTime()}"></td>
+            <td>
+                <div th:if="${!ticket.done}">
+                    <a th:href="@{tickets/check(id=${ticket.id})}">Sprawdź bilet</a>
+                </div>
+                <div th:if="${ticket.done}">
+                    <p>Zakończone</p>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Podgląd klubu</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row top collection green lighten-3" style="margin: 20px;border: outset darkgreen;">
+        <div class="s4 col left center-align ">
+            <img style=" width:400px;height:400px;" th:src="${club.getPictureUrl()}">
+        </div>
+        <div class="s4 col left center-align " style="position: center">
+            <h1 th:text="${club.getName()}">Nazwa klubu</h1>
+            <h4 th:text="${club.getShortName()}">Skrót</h4>
+            <h4 th:text="'Siła klubu - '+ ${club.getPower()}"></h4>
+        </div>
+        <div class="s4 col right center-align " style="text-shadow: 2px 1px 2px #FFFFFF;"
+             th:with="stats=${club.getClubStatistics()}">
+            <h4>Rozegrane Mecze</h4>
+            <span th:text="${club.getClubStatistics().getTotal()}" w></span>
+            <h4>Wygrane Mecze</h4>
+            <span th:text="${stats.getWinners()}"></span>
+            <h4>Przegrane Mecze</h4>
+            <span th:text="${stats.getLosers()}"></span>
+            <h4>Remisy</h4>
+            <span th:text="${stats.getDraws()}"></span>
+        </div>
+    </div>
+    <h2 class="center-align" style="text-shadow: 2px 2px 5px #FFFFFF;">Zawodnicy</h2>
+    <div class="bottom row ">
+        <div class="center-align " th:each="player:${club.getPlayers()}">
+            <a th:href="@{/player/{id}(id=${player.getId()})}">
+                <div class="col s2 green lighten-3 black-text"
+                     style=" margin: 20px;border: outset darkgreen; padding: 0;height: 350px;width: 320px">
+                    <img alt="" style="width: max-content; max-width: 100%; height: max-content; max-height: 200px;"
+                         th:src="${player.getPictureUrl()}">
+                    <div class="bottom" style="text-shadow: 2px 1px 2px #FFFFFF;">
+                        <h4 th:text="${player.getFullName()}">Imię zawodnika</h4>
+                        <span th:text="${player.getPosition().getTranslate()}">Pozycja</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

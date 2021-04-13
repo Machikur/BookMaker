@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytuj profil</title>
+</head>
+<body>
+<div layout:fragment="content" style="padding: 100px">
+    <div class=" green lighten-3"
+         style="border: solid 1px darkgreen;height: 800px">
+        <div class="row" style="margin: 10px">
+            <h2 class="center-align">Twój profil</h2>
+            <div class="col l6 left center-align">
+                <h3 style="text-shadow: 2px 2px 5px #FFFFFF;">Twoje zdjęcie</h3>
+                <div class="center" style="margin: 10px">
+                    <img style="max-width:300px;width:100%;max-height:350px;height:100%"
+                         th:src="@{${user.getPicturePath()==null? pic : '/user/uploadedPicture'}}"/>
+                </div>
+                <form enctype="multipart/form-data" method="post" th:action="@{/user/picture}">
+                    <div style="margin: 10px">
+                        <input accept="image/*" id="file" name="file" required="required" type="file"/>
+                    </div>
+                    <div style="margin: 10px">
+                        <button class="btn center" name="upload" type="submit">Wrzuć zdjęcie</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col l4 center">
+                <form method="post" th:action="@{/user}" th:object="${user}">
+                    <h3 style="text-shadow: 2px 2px 5px #FFFFFF;">Uaktualnij swoje dane</h3>
+                    <input class="input-field" id="username" th:field="*{username}" type="text">
+                    <label for="username"></label>
+                    <input class="input-field" id="password" th:field="*{password}" type="password">
+                    <label for="password"></label>
+                    <button class="btn" type="submit">Uaktualnij</button>
+                </form>
+            </div>
+        </div>
+        <div class="center">
+            <h3> Postawione zaklady - <u><span class="green-text" th:text="${ticketNumber}"></span></u></h3>
+            <h3> Wygrane pieniądze - <u><span class="green-text" th:text="${positiveSum} + 'zł'"></span></u></h3>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
