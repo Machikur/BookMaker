@@ -7,7 +7,7 @@
     <title>Ostatnie zakłady</title>
 </head>
 <body>
-<nav layout:fragment="sidebar">
+<nav layout:fragment="sidebar" class="nav bg-info justify-content-start sidebar bg-dark rounded h-75 pl-2 pr-2 pb-2 mt-5">
     <ul class="list-group serif ">
         <a class="no-dec black-text" th:href="@{/tickets}">
             <li class="list-group-item ">Wszystkie</li>
@@ -26,7 +26,6 @@
         </a>
     </ul>
 </nav>
-
 <div layout:fragment="content">
 
     <table class=" table table-striped table-dark">

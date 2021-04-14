@@ -7,7 +7,6 @@
     <title>Kup zakład</title>
 </head>
 <body>
-<div class="zero-size" layout:fragment="sidebar"></div>
 <div class="mx-auto w-75" layout:fragment="content">
     <h2 class="white-shadow text-center">Obstaw mecz</h2>
     <div class="container d-flex flex-column shadow-wrapper">
@@ -17,19 +16,45 @@
             <div class="col 4"><h2 th:text="${ticket.getOpTeam()}"></h2></div>
         </div>
     </div>
-    <div class="row"></div>
-    <form class="mx-auto w-25" method="post" th:action="@{/ticket}" th:object="${ticket}">
-        <label for="winner"></label>
-        <select class="form-select mt-2" id="winner" th:class="col" th:field="${ticket.guessedWinner}">
-            <div th:each="win: ${winners}">
-                <option th:text="${win.toString()}" th:value="${win.name}"></option>
-            </div>
-        </select>
-        <input class="col mt-2" id="quote" min="0" name="quote" required="required" step="0.01"
-               th:field="${ticket.quote}"
-               type="number">
-        <button class="col btn btn-light mt-2 my-auto" type="submit">Zakład</button>
-    </form>
+    <h2 class="white-shadow text-center mt-5 mb-1">Kursy</h2>
+    <div class="d-flex flex-column justify-content-around">
+        <div class="col-6 mx-auto">
+            <table class="table table-dark table-striped w-50 mx-auto">
+                <thead>
+                <tr>
+                    <th scope="col">Gospodarz</th>
+                    <th scope="col">Remis</th>
+                    <th scope="col">Oponent</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <div th:each="win: ${winners}">
+                        <td th:id="${win.toString()}"><span th:text="${multipliers.get(win)}"></span></td>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-2 mx-auto">
+            <form method="post" th:action="@{/ticket}" th:object="${ticket}">
+                <div class="text-center">
+                    <label class="text-white mt-2" for="winner">Na kogo chcesz obstawić?</label>
+                    <select id="winner" class="form-select  mb-2"  th:class="col"
+                            th:field="${ticket.guessedWinner}">
+                        <div th:each="win: ${winners}">
+                            <option th:text="${win.toString()}" th:value="${win.name}"></option>
+                        </div>
+                    </select>
+                    <label class="text-white mt-2" for="quote">Postawiona kwota</label>
+                    <input class="form-control mb-2" id="quote" min="0" name="quote" required="required" step="0.01"
+                           th:field="${ticket.quote}"
+                           type="number">
+                    <button class="btn btn-secondary mt-2" type="submit">Utwórz zakład</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

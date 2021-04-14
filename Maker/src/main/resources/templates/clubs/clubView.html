@@ -7,17 +7,17 @@
     <title>Podgląd klubu</title>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="row top collection green lighten-3" style="margin: 20px;border: outset darkgreen;">
-        <div class="s4 col left center-align ">
-            <img style=" width:400px;height:400px;" th:src="${club.getPictureUrl()}">
-        </div>
-        <div class="s4 col left center-align " style="position: center">
+<div layout:fragment="content" class="ml-5 mr-5 w-100 ">
+    <div class=" d-flex flex-row">
+        <div class="col  text-center ">
             <h1 th:text="${club.getName()}">Nazwa klubu</h1>
             <h4 th:text="${club.getShortName()}">Skrót</h4>
             <h4 th:text="'Siła klubu - '+ ${club.getPower()}"></h4>
         </div>
-        <div class="s4 col right center-align " style="text-shadow: 2px 1px 2px #FFFFFF;"
+        <div class="col left  text-center">
+            <img class="background-cover" style=" width:500px;" th:src="${club.getPictureUrl()}">
+        </div>
+        <div class="col right text-center white-shadow"
              th:with="stats=${club.getClubStatistics()}">
             <h4>Rozegrane Mecze</h4>
             <span th:text="${club.getClubStatistics().getTotal()}" w></span>
@@ -29,20 +29,20 @@
             <span th:text="${stats.getDraws()}"></span>
         </div>
     </div>
-    <h2 class="center-align" style="text-shadow: 2px 2px 5px #FFFFFF;">Zawodnicy</h2>
-    <div class="bottom row ">
-        <div class="center-align " th:each="player:${club.getPlayers()}">
-            <a th:href="@{/player/{id}(id=${player.getId()})}">
-                <div class="col s2 green lighten-3 black-text"
-                     style=" margin: 20px;border: outset darkgreen; padding: 0;height: 350px;width: 320px">
-                    <img alt="" style="width: max-content; max-width: 100%; height: max-content; max-height: 200px;"
-                         th:src="${player.getPictureUrl()}">
-                    <div class="bottom" style="text-shadow: 2px 1px 2px #FFFFFF;">
-                        <h4 th:text="${player.getFullName()}">Imię zawodnika</h4>
-                        <span th:text="${player.getPosition().getTranslate()}">Pozycja</span>
+    <h1 class="white-shadow text-center">Zawodnicy</h1>
+    <div class="container d-flex flex-row flex-wrap  justify-content-between ">
+        <div th:each="player:${club.getPlayers()}">
+            <div class="h-25">
+                <div class="p-2 card mt-2 mb-2 text-center border-inset multicolor" >
+                    <img class="card-img-top " style=" width: 18rem; height: 10rem" th:src="${player.getPictureUrl()}"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class=" white-shadow" th:text="${player.getFullName()}">Imię zawodnika</h4>
+                        <p class="card-text white-shadow" th:text="${player.getPosition().getTranslate()}">Pozycja.</p>
+                        <a th:href="@{/player/{id}(id=${player.getId()})}" class="btn btn-secondary">Podgląd</a>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 </div>

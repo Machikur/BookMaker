@@ -24,7 +24,7 @@ public class ClubsController {
     }
 
     @GetMapping("/{id}")
-    public String mainView(@PathVariable Long id, Model model) {
+    public String clubView(@PathVariable Long id, Model model) {
         model.addAttribute("club", footballClubService.getClubById(id));
         return "clubs/clubView";
     }

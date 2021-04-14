@@ -26,9 +26,7 @@ public class TicketHistoryController {
     }
 
     @GetMapping
-    public String getMainView(@RequestParam(required = false) Boolean done,
-                              @RequestParam(required = false) Boolean won,
-                              Model model) {
+    public String getMainView(@RequestParam(required = false) Boolean done, @RequestParam(required = false) Boolean won, Model model) {
         if (won != null) {
             model.addAttribute("activeTickets", ticketService.findAllDoneByUserIdAndWonTicket(activeUser.getUserId(), won));
         } else {

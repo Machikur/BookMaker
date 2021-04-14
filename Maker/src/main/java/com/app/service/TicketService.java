@@ -48,7 +48,7 @@ public class TicketService {
             throw new TicketException("Mecz już się zakończył");
         }
         accountService.takeCash(ticket.getQuote(), account);
-        ticket.setQuoteToWin(ticket.getQuote().multiply(BigDecimal.valueOf(ticketManager.countMultiplierByWinnerType(matchDto, ticket.getGuessedWinner()))));
+        ticket.setQuoteToWin(ticket.getQuote().multiply(ticketManager.countMultiplierByWinnerType(matchDto, ticket.getGuessedWinner())));
         Payment payment = new Payment(account, ticket.getQuote(), false);
         paymentService.savePayment(payment);
         return saveTicket(ticket);
@@ -65,7 +65,7 @@ public class TicketService {
         return ticket;
     }
 
-    public Map<Winner, Double> getMultipliersForMatch(MatchDto matchDto) {
+    public Map<Winner, BigDecimal> getMultipliersForMatch(MatchDto matchDto) {
         return ticketManager.getPricesForMatch(matchDto);
     }
 

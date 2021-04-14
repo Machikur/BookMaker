@@ -74,7 +74,7 @@ main {
     height: 10%;
 }
 
-.clubCard {
+.hiddenCard {
     flex: 1;
     margin: 30px;
     background-image: none !important;
@@ -91,9 +91,14 @@ main {
     width: 100%;
 }
 
-.zero-size {
-    max-width: 0;
-    max-height: 0;
-    margin: 0;
-    padding: 0;
+.background-cover {
+    background-size: cover;
+}
+
+.multicolor{
+    background-image: linear-gradient(to bottom right, green, mintcream);
+}
+
+.border-inset{
+    border-style: inset;!important;
 }
