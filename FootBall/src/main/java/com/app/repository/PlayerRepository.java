@@ -15,4 +15,7 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
     Optional<Player> findById(Long id);
 
     Set<Player> findAllByFootballClubId(Long id);
+
+    Optional<Player> findFirstByFullNameContainingIgnoreCase(String fullName);
+
 }

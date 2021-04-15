@@ -1,7 +1,6 @@
 package com.app.service.data;
 
 import com.app.domain.*;
-import com.app.exception.MatchNotFoundException;
 import com.app.repository.MatchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +47,7 @@ public class MatchService {
     }
 
     public Page<Match> findAllByFinished(boolean finished, Pageable pageable) {
-        return matchRepository.findAllByFinishedOrderByDateOfMatchDesc(finished, pageable);
+        return matchRepository.findAllByFinishedOrderByDateOfMatchDescStartTimeDesc(finished, pageable);
     }
 
     public Optional<Match> findById(Long id) {

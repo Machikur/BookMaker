@@ -7,41 +7,35 @@
     <title>Przegląd meczu</title>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="row top collection green lighten-3 no-padding" style="margin: 20px;border: outset darkgreen;">
-        <div class="s4 col left">
+<div layout:fragment="content" class="mx-auto w-100 text-center ">
+    <div class="container d-flex flex-row justify-content-around black-color-white-shadow">
+        <div class="col">
             <a th:href="@{/club/{clubId}(clubId=${match.getHostTeam().getId()})}">
-                <img style="width: 400px; height: 400px; margin: 0" th:src="${match.getHostTeam().getPictureUrl()}">
+                <img style="width: 400px;" th:src="${match.getHostTeam().getPictureUrl()}">
             </a>
         </div>
-        <div class="s4 col right">
+        <div class="my-auto col text-center">
+            <h1 class="text-red">VS</h1>
+
+        </div>
+        <div class="col">
             <a th:href="@{/club/{clubId}(clubId=${match.getOppositeTeam().getId()})}">
-                <img style="width: 400px; height: 400px; margin: 0" th:src="${match.getOppositeTeam().getPictureUrl()}">
+                <img style="width: 400px;" th:src="${match.getOppositeTeam().getPictureUrl()}">
             </a>
         </div>
-        <div class="s4 col center">
-            <h4 th:text="${match.getHostTeam().getName()} + ' VS ' + ${match.getOppositeTeam().getName()} ">
-                Walczący</h4>
-            <h4 th:text="'Data meczu - '+${match.getDateOfMatch()}"></h4>
-            <h4 th:text="'Start - '+${match.getStartTime()}"></h4>
-            <h4 th:text="'Koniec - '+${match.getFinishTime()}"></h4>
-            <h4 th:if="${match.finished}"><span
-                    th:text="'Zwycięzcą został - ' + ${match.getWinner().toString()}"></span></h4>
-            <h4 th:if="${match.result}"><span th:text="'Wynik - ' + ${match.getResult()}"></span></h4>
-            <form method="get" th:action="@{/ticket/new}" th:if="${!match.getFinished()}" th:object="${match}">
-                <button class="btn-large " type="submit">Obstaw mecz</button>
-            </form>
+    </div>
+    <div class="text-green shadow-wrapper w-25 mx-auto" >
+        <h2  th:text="${match.getDateOfMatch()}"></h2>
+        <h2  th:text="'Start - '+${match.getStartTime()}"></h2>
+        <h3 class="white-text">Strzelone bramki</h3>
+        <div th:each="goal:${match.getGoals()}">
+            <h3 class="text-secondary" th:text="${goal.getPlayerName()} + ' - '+ ${goal.getTimeOfGoal()}"></h3>
         </div>
+        <h2 class="text-red" th:text="'Koniec - '+${match.getFinishTime()}"></h2>
+        <h2 th:text="'Wynik - ' + ${match.getResult()}"></h2>
     </div>
 </div>
 
-<h1 class="center-align" th:if="${match.getGoals().size()>0}">Strzelone bramki</h1>
-<div th:with="goals=${match.getGoals()}">
-    <div class="row center-align green lighten-3 black-text" style=" margin: 40px 200px;border: outset darkgreen;"
-         th:each="goal:${goals}">
-        <h4 th:text="${goal.getPlayerName()} + ' - '+ ${goal.getTimeOfGoal()}"></h4>
-    </div>
-</div>
 
 </body>
 </html>

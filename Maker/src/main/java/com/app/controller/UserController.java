@@ -12,7 +12,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -71,7 +74,6 @@ public class UserController {
         IOUtils.copy(new FileInputStream(picture), response.getOutputStream());
     }
 
-
     @GetMapping
     public String userView(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("pic", pictureService.getAnonymousPicture());
@@ -81,19 +83,20 @@ public class UserController {
         return "user/edit";
     }
 
+    @PostMapping
+    public String updateUser(@ModelAttribute("user") User userDetails, @AuthenticationPrincipal User user, RedirectAttributes attributes) {
+        activeUser.saveSession(userService.updateDetails(userDetails, user));
+        attributes.addFlashAttribute("message", "Uaktualniono dane");
+        System.out.println(user.getUsername() + user.getPassword());
+        return "redirect:/user";
+    }
+
     @PostMapping("/picture")
     public String updateUser(MultipartFile file, @AuthenticationPrincipal User user) throws IOException {
         String picturePath = pictureService.saveFileAndGetURL(file);
         user.setPicturePath(picturePath);
         activeUser.saveSession(userService.updateUser(user));
-        activeUser.saveSession(user);
         return "redirect:/user";
-    }
-
-    @ResponseBody
-    @GetMapping("/exists")
-    public Boolean checkIfUsernameExists(@RequestParam String username){
-        return userService.existByUsername(username);
     }
 
 }

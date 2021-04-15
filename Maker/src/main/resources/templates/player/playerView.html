@@ -7,29 +7,30 @@
     <title>Podgląd Gracza</title>
 </head>
 <body>
-<div layout:fragment="content" class="ml-5 mr-5 w-100 " >
-    <div class=" d-flex flex-row justify-content-around">
-        <div class="col center-align ">
-            <img class="border-inset background-cover" style="width: 700px; " th:src="${player.getPictureUrl()}">
-        </div>
-        <div class="col left center-align text-center">
-            <h2>Personalia</h2>
-            <h5>Członek klubu</h5>
-            <span th:text=" ${player.getFootballClubName()}"></span></br>
+<div layout:fragment="content" class="ml-5 mr-5 w-100 fantasy-font">
+    <h1 class="text-center black-color-white-shadow" th:text=" ${player.getFullName()}"></h1></br>
+    <div class=" d-flex flex-row justify-content-around shadow-wrapper">
+        <div class="col align-middle text-center">
+            <h5>Drużyna</h5>
+            <h1 th:text=" ${player.getFootballClubName()}"></h1></br>
             <h5>Pozycja</h5>
-            <span th:text="${player.getPosition().getTranslate()}"></span>
-            <h5>Strzelone Bramki</h5>
-            <span th:text="${player.getGoalIds().size()}"></span>
+            <h1 th:text="${player.getPosition().getTranslate()}"></h1></br>
+            <h1 th:text="${'Strzelone Bramki - ' + player.getGoalIds().size()}"></h1>
         </div>
-        <div class="col right text-center white-shadow">
-        <div th:with="skills=${player.getSkills()}">
-            <h2>Umiejętności</h2>
-            <h5>Szybkość</h5>
-            <span th:text="${skills.getSpeed()}"></span>
-            <h5>Wytrzymałość</h5>
-            <span th:text="${skills.getEndurance()}"></span>
-            <h5>Gra drużynowa</h5>
-            <span th:text="${skills.getTeamPlay()}"></span>
+        <div class="col center-align ">
+            <img class="rounded-circle background-cover olive-shadow" style="width: 700px;height: 400px;"
+                 th:src="${player.getPictureUrl()}">
+        </div>
+        <div class="col right text-center ">
+            <div th:with="skills=${player.getSkills()}">
+                <h1>Umiejętności</h1></br>
+                <h2>Szybkość</h2>
+                <h4 th:text="${skills.getSpeed()}"></h4></br>
+                <h2>Wytrzymałość</h2>
+                <h4 th:text="${skills.getEndurance()}"></h4></br>
+                <h2>Gra drużynowa</h2>
+                <h4 th:text="${skills.getTeamPlay()}"></h4>
+            </div>
         </div>
     </div>
 </div>

@@ -32,12 +32,21 @@ public class UserService implements UserDetailsService {
         return repository.save(user);
     }
 
-    public boolean existByUsername(String username){
-       return repository.existsByUsername(username);
-    }
-
     public User updateUser(User user) {
         return repository.save(user);
+    }
+
+    public User updateDetails(User userDetails,User userToUpdate){
+        if (userDetails.getUsername()!=null){
+            userToUpdate.setUsername(userDetails.getUsername());
+        }
+        if (userDetails.getPassword()!=null){
+            userToUpdate.setPassword(encoder.encode(userDetails.getPassword()));
+        }
+        if (userDetails.getPicturePath()!=null){
+            userToUpdate.setPicturePath(userDetails.getPicturePath());
+        }
+      return  updateUser(userToUpdate);
     }
 
     @Override

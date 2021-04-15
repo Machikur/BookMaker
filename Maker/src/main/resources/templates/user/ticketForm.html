@@ -8,15 +8,15 @@
 </head>
 <body>
 <div class="mx-auto w-75" layout:fragment="content">
-    <h2 class="white-shadow text-center">Obstaw mecz</h2>
+    <h2 class="black-color-white-shadow text-center">Obstaw mecz</h2>
     <div class="container d-flex flex-column shadow-wrapper">
-        <div class="row p-2 text-center">
-            <div class="col 4"><h2 th:text="${ticket.hostTeam}"></h2></div>
-            <div class="col-1"><h2 class="col 1 mx-auto">VS</h2></div>
-            <div class="col 4"><h2 th:text="${ticket.getOpTeam()}"></h2></div>
+        <div class="row p-2 text-center ">
+            <div class="col 4 text-green"><h1 th:text="${ticket.hostTeam}"></h1></div>
+            <div class="col-1"><h1 class="col 1 mx-auto">VS</h1></div>
+            <div class="col 4 text-red"><h1 th:text="${ticket.getOpTeam()}"></h1></div>
         </div>
     </div>
-    <h2 class="white-shadow text-center mt-5 mb-1">Kursy</h2>
+    <h2 class="black-color-white-shadow text-center mt-5 mb-1">Kursy</h2>
     <div class="d-flex flex-column justify-content-around">
         <div class="col-6 mx-auto">
             <table class="table table-dark table-striped w-50 mx-auto">

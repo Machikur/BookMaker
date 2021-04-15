@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.List;
+
 @Controller
 @SessionAttributes("match")
 @RequestMapping("/")
@@ -25,9 +27,12 @@ public class HomeController {
     @GetMapping
     public String home(Model model) {
         MatchDto match = matchService.findFirstMatchInTheQue();
+        List<MatchDto> matches = matchService.findAllByFinished(false, 0).getContent();
         model.addAttribute("match", match);
+        model.addAttribute("matches", matchService.sortByDate(matches));
         model.addAttribute("time", timeService.getTimeToFinish(match));
         return "home";
     }
+
 
 }

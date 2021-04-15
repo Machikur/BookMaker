@@ -5,10 +5,7 @@ import com.app.dto.PlayerDto;
 import com.app.mapper.AppMapper;
 import com.app.service.data.PlayerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -40,6 +37,13 @@ public class PlayerController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<PlayerDto> findByName(@RequestParam String name) {
+        Optional<Player> optionalPlayer = playerService.findByFullNameContainingIgnoreCase(name);
+        return optionalPlayer.map(player -> ResponseEntity.ok(AppMapper.mapToDto(player)))
+                .orElseGet(()->ResponseEntity.notFound().build());
     }
 
 }

@@ -15,10 +15,12 @@ public class PlayersUrls extends ClientUrl {
                 .build(Collections.singletonMap("id", id));
     }
 
-    public URI getAllPlayerByClubId(Long id) {
+    public URI getPlayerByName(String name) {
         return UriComponentsBuilder.fromHttpUrl(clientUrl)
-                .path("player/club/{id}")
-                .build(Collections.singletonMap("id", id));
+                .path("player/check")
+                .queryParam("name", name)
+                .build()
+                .toUri();
     }
 
 }

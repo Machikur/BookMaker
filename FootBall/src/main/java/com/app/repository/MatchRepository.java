@@ -23,7 +23,7 @@ public interface MatchRepository extends PagingAndSortingRepository<Match, Long>
 
     Set<Match> findAllByFinished(boolean finished);
 
-    Page<Match> findAllByFinishedOrderByDateOfMatchDesc(boolean finished, Pageable pageable);
+    Page<Match> findAllByFinishedOrderByDateOfMatchDescStartTimeDesc(boolean finished, Pageable pageable);
 
     int countAllByFinished(boolean finished);
 

@@ -1,6 +1,7 @@
 package com.app.client.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -9,15 +10,20 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PageWrapper {
 
-    private int number;
-    private int size;
-    private int totalPages;
-    private int numberOfElements;
-    private long totalElements;
-    private boolean previousPage;
-    private boolean firstPage;
-    private boolean nextPage;
-    private boolean lastPage;
+    @JsonProperty("pageable")
+    private PageDetails pageDetails;
     private List<MatchDto> content;
+    private int totalPages;
 
+    public boolean hasPrevious() {
+        return pageDetails.getPageNumber() > 0;
+    }
+
+    public boolean hasNext() {
+        return pageDetails.getPageNumber() < totalPages - 1;
+    }
+
+    public int getNumberOfPage(){
+        return pageDetails.getPageNumber();
+    }
 }

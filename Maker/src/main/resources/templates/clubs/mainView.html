@@ -13,7 +13,7 @@
             <div class="col card hiddenCard" style="width: 18rem;">
                 <img class="card-img-top" th:src="${club.getPictureUrl()}">
                 <div class="card-body text-center">
-                    <h3 class="card-title white-shadow" th:text="${club.getName()}"></h3>
+                    <h3 class="card-title black-color-white-shadow" th:text="${club.getName()}"></h3>
                     <form method="get" th:action="@{/club/{id}(id=${club.getId()})}" class="text-center">
                         <button class="btn btn-secondary " type="submit">Podglad</button>
                     </form>

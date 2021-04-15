@@ -32,7 +32,7 @@ public class TicketHistoryController {
         } else {
             model.addAttribute("activeTickets", ticketService.findAllByUserIdAndDone(activeUser.getUserId(), done));
         }
-        return "user/mainView";
+        return "user/ticketHistory";
     }
 
     @GetMapping("/check")

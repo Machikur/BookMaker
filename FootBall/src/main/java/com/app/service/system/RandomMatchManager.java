@@ -16,7 +16,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class RandomMatchManager implements MatchManager {
 
-    private final static int MAX_SECONDS_BETWEEN_GOAL = 1800;
+    private final static int MAX_SECONDS_BETWEEN_GOALS = 1800;
     private final static int CHANCE_TO_GOAL_IN_PERCENTAGES = 50;
     private final static String OPPOSITE_TEAM = "opTeam";
     private final static String FIRST_TEAM = "firstTeam";
@@ -68,7 +67,7 @@ public class RandomMatchManager implements MatchManager {
     }
 
     private boolean addRandomTimeAndCheckIfIsNotBoundOfTime() {
-        this.currentFakeMatchTime = currentFakeMatchTime.plusSeconds(random.nextInt(MAX_SECONDS_BETWEEN_GOAL));
+        this.currentFakeMatchTime = currentFakeMatchTime.plusSeconds(random.nextInt(MAX_SECONDS_BETWEEN_GOALS));
         return LocalDateTime.now().isAfter(currentFakeMatchTime);
     }
 

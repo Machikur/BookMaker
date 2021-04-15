@@ -8,6 +8,7 @@ import java.util.Collection;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerDto {
+
     private Long id;
     private String fullName;
     private String footballClubName;

@@ -20,14 +20,14 @@ public class PlayersService {
         this.playersUrls = playersUrls;
     }
 
-    public List<PlayerDto> getPlayersByClubId(Long id) {
-        ResponseEntity<PlayerDto[]> players = restTemplate.getForEntity(playersUrls.getAllPlayerByClubId(id), PlayerDto[].class);
-        return Arrays.asList(players.getBody());
+    public PlayerDto getPLayerByName(String name) {
+        ResponseEntity<PlayerDto> player = restTemplate.getForEntity(playersUrls.getPlayerByName(name), PlayerDto.class);
+        return player.getBody();
     }
 
     public PlayerDto getPlayerById(Long id) {
-        ResponseEntity<PlayerDto> players = restTemplate.getForEntity(playersUrls.getPlayerById(id), PlayerDto.class);
-        return players.getBody();
+        ResponseEntity<PlayerDto> player = restTemplate.getForEntity(playersUrls.getPlayerById(id), PlayerDto.class);
+        return player.getBody();
     }
 
 }

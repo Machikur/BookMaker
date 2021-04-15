@@ -28,5 +28,9 @@ public class PlayerService {
         return playerRepository.findAllByFootballClubId(clubId);
     }
 
+    public Optional<Player> findByFullNameContainingIgnoreCase(String name){
+        return playerRepository.findFirstByFullNameContainingIgnoreCase(name);
+    }
+
 
 }

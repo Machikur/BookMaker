@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html layout:decorator="template"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Znajdź zawodnika</title>
+    <script>
+        function findPLayer() {
+            const name = document.getElementById("playerName").value;
+            window.location.href = "http://localhost:8080/player/check?name=" + name;
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content" class="mx-auto w-25 mt-5 white-text">
+    <h1 class=" text-center">Wyszukaj piłkarza</h1>
+    <form class="text-center">
+        <div class="form-group">
+            <label for="playerName"></label>
+            <input  type="text" class="form-control" id="playerName" placeholder="Imię">
+        </div>
+        <a class="btn btn-secondary btn-lg mt-3"  onclick="findPLayer();">Wyszukaj</a>
+    </form>
+</div>
+</body>
+</html>

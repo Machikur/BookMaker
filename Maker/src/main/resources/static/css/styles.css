@@ -32,9 +32,13 @@ a:hover {
     padding: 5px 10px 0 10px;
 }
 
-.white-shadow {
+.black-color-white-shadow {
     color: black;
     text-shadow: 2px 2px 2px white;
+}
+
+.white-text{
+    color: white !important;
 }
 
 .no-dec:hover {
@@ -95,10 +99,47 @@ main {
     background-size: cover;
 }
 
-.multicolor{
-    background-image: linear-gradient(to bottom right, green, mintcream);
+.multicolor-red-yellow{
+    background-image: linear-gradient(to bottom right, red, yellow);
+}
+
+.multicolor-cream-white{
+    background-image: linear-gradient(to bottom right, #FFFCD0, white);
 }
 
 .border-inset{
     border-style: inset;!important;
+}
+
+.olive-shadow{
+    box-shadow: 0 0 1em olive;
+}
+
+.fantasy-font{
+    font-family:Luminari, fantasy;
+    text-shadow:  1px 1px 2px black;
+}
+
+.text-red{
+color: red !important;
+}
+
+.text-green{
+    color: green !important;
+}
+
+.white-background{
+    background: white;
+}
+
+.border-radius-medium{
+    border-radius: 10px;
+}
+
+.big-shadow{
+    box-shadow: rgba(0, 0, 0, 0.25) 0 54px 55px,
+    rgba(0, 0, 0, 0.12) 0 -12px 30px,
+    rgba(0, 0, 0, 0.12) 0 4px 6px,
+    rgba(0, 0, 0, 0.17) 0 12px 13px,
+    rgba(0, 0, 0, 0.09) 0 -3px 5px;
 }

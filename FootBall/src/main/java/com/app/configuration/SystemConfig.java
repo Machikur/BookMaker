@@ -13,7 +13,7 @@ public class SystemConfig {
         this.matchSystemManager = matchSystemManager;
     }
 
-    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron = "* */30 * * * *")
     public void manage() {
         matchSystemManager.manage();
     }

@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Transactional
 public class RandomMatchSystemManager implements MatchSystemManager {
 
-    private final static int MAX_NOT_FINISHED_MATCHES = 15;
+    private final static int MAX_NOT_FINISHED_MATCHES = 6;
     private final static int START_TIME_HOUR = 10;
     private final static int FINISH_TIME_HOUR = 20;
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
@@ -77,14 +77,14 @@ public class RandomMatchSystemManager implements MatchSystemManager {
     }
 
     private LocalDate getRandomDate() {
-        return LocalDate.now();
-        //return LocalDate.now().plusDays(random.nextLong(2) + 1);
+      //  return LocalDate.now();
+        return LocalDate.now().plusDays(random.nextLong(1) + 1);
     }
 
     private LocalTime getRandomTime() {
-        return LocalTime.now().minusMinutes(85).minusSeconds(45);
-//        int randomHour = random.nextInt(FINISH_HOUR_TIME - START_HOUR_TIME + 1) + START_HOUR_TIME;
-//        return LocalTime.of(randomHour, random.nextInt(60));
+     //   return LocalTime.now().minusMinutes(85).minusSeconds(45);
+        int randomHour = random.nextInt(FINISH_TIME_HOUR - START_TIME_HOUR + 1) + START_TIME_HOUR;
+        return LocalTime.of(randomHour, random.nextInt(60));
     }
 
     private long countTimeToFinishMatchInMs(Match match) {
