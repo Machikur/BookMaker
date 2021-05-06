@@ -1,4 +1,4 @@
 package com.app.exception;
 
-public class MatchNotFoundException extends RuntimeException{
+public class MatchNotFoundException extends RuntimeException {
 }

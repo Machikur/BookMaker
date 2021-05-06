@@ -1,10 +1,7 @@
 package com.app.service;
 
+import com.app.configuration.match.MatchManager;
 import com.app.domain.*;
-import com.app.service.data.FootballClubService;
-import com.app.service.data.MatchService;
-import com.app.service.data.PlayerService;
-import com.app.service.system.MatchManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.domain.FootballClub;
 import com.app.dto.FootballClubDto;
 import com.app.mapper.AppMapper;
-import com.app.service.data.FootballClubService;
+import com.app.service.FootballClubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequestMapping("/club")
 @RequiredArgsConstructor
 public class FootballClubController {
-
     private final FootballClubService footballClubService;
 
     @GetMapping("/{id}")

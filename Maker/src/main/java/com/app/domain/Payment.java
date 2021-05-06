@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @Getter
 @NoArgsConstructor
+@Table(name = "payment")
 public class Payment {
 
     @Id

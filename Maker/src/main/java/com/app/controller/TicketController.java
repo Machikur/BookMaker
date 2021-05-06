@@ -33,29 +33,28 @@ public class TicketController {
 
 
     @GetMapping
-        public String newTicketView(@RequestParam Long matchId, Model model) {
-            MatchDto match= matchService.findById(matchId);
-            model.addAttribute("ticket", ticketService.createTicketForMatch(match, activeUser.getUserId()));
-            model.addAttribute("multipliers", ticketService.getMultipliersForMatch(match));
-            model.addAttribute("winners", Winner.values());
-            return "user/ticketForm";
-        }
+    public String newTicketView(@RequestParam Long matchId, Model model) {
+        MatchDto match = matchService.findById(matchId);
+        model.addAttribute("ticket", ticketService.createTicketForMatch(match, activeUser.getUserId()));
+        model.addAttribute("multipliers", ticketService.getMultipliersForMatch(match));
+        model.addAttribute("winners", Winner.values());
+        return "user/ticketForm";
+    }
 
-        @PostMapping
-        public String createNewTicket(@ModelAttribute("ticket") Ticket ticket,
-                                      RedirectAttributes redirectAttributes, HttpServletRequest request) {
-            try {
-                ticketService.validateTicketSaveAndCreatePayment(ticket, activeUser.getAccount());
-                updateAccountBalance(request);
-            }
-            catch (TicketException | NotEnoughCashException ex){
-                redirectAttributes.addFlashAttribute("error",ex.getMessage());
-                return "redirect:/";
-            }
-            return "redirect:/tickets";
+    @PostMapping
+    public String createNewTicket(@ModelAttribute("ticket") Ticket ticket,
+                                  RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        try {
+            ticketService.validateTicketSaveAndCreatePayment(ticket, activeUser.getAccount());
+            updateAccountBalance(request);
+        } catch (TicketException | NotEnoughCashException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/";
         }
+        return "redirect:/tickets";
+    }
 
-    private void updateAccountBalance(HttpServletRequest request){
-        request.getSession().setAttribute("cash",activeUser.getAccount().getCash());
+    private void updateAccountBalance(HttpServletRequest request) {
+        request.getSession().setAttribute("cash", activeUser.getAccount().getCash());
     }
 }

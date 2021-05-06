@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/match")
 public class MatchController {
@@ -31,8 +29,8 @@ public class MatchController {
     @GetMapping("/history")
     public String historyView(@RequestParam(defaultValue = "0") int page, Model model) {
         PageWrapper pageWrapper = matchService.findAllByFinished(true, page);
-        model.addAttribute("matches",matchService.sortByDateReversed(pageWrapper.getContent()));
-        model.addAttribute("page",pageWrapper);
+        model.addAttribute("matches", matchService.sortByDateReversed(pageWrapper.getContent()));
+        model.addAttribute("page", pageWrapper);
         return "match/history";
     }
 

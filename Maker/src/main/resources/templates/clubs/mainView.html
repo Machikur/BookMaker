@@ -7,15 +7,15 @@
     <title>Aktywne kluby</title>
 </head>
 <body>
-<div layout:fragment="content" class="m-auto">
+<div class="m-auto" layout:fragment="content">
     <div class="container row d-flex justify-content-around w-auto">
         <div th:each="club,row : ${clubs}">
             <div class="col card hiddenCard" style="width: 18rem;">
                 <img class="card-img-top" th:src="${club.getPictureUrl()}">
                 <div class="card-body text-center">
                     <h3 class="card-title black-color-white-shadow" th:text="${club.getName()}"></h3>
-                    <form method="get" th:action="@{/club/{id}(id=${club.getId()})}" class="text-center">
-                        <button class="btn btn-secondary " type="submit">Podglad</button>
+                    <form class="text-center" method="get" th:action="@{/club/{id}(id=${club.getId()})}">
+                        <button class="btn btn-secondary btn-lg " type="submit">Podglad</button>
                     </form>
                 </div>
             </div>

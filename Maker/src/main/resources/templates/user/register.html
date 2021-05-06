@@ -8,30 +8,30 @@
     <script th:src="@{/js/registerFuntions.js}" type="text/javascript"></script>
 </head>
 <body>
-<div layout:fragment="content" class="ml-5 mr-5 w-100" id="registerForm">
+<div class="ml-5 mr-5 w-100" id="registerForm" layout:fragment="content">
     <div class="container shadow-wrapper text-center">
         <h2 class="text-center">Zarejestruj się</h2>
         <form method="post" th:action="@{/user/register}" th:object="${user}">
             <div class="form-group">
                 <label for="username">Nazwa użytkownika</label>
-                <input id="username" name="username" placeholder="Nazwa użytkownika" required="required"
-                       class="form-control" oninput="existByUsername();"
+                <input class="form-control" id="username" name="username" oninput="existByUsername();"
+                       placeholder="Nazwa użytkownika" required="required"
                        th:field="*{username}" type="text">
             </div>
             <div class="form-group">
                 <label for="password1">Hasło</label>
-                <input id="password1" name="password" placeholder="Hasło" required="required"
-                       th:field="*{password}" type="password" class="form-control" >
+                <input class="form-control" id="password1" name="password" placeholder="Hasło"
+                       required="required" th:field="*{password}" type="password">
             </div>
             <div class="form-group">
-                <label id="passwordLabel" for="password2">Powtórz hasło</label>
-                <input id="password2" name="password" placeholder="Powtórz hasło" required="required"
-                       oninput="unlockNewUserButton()" type="password" class="form-control">
+                <label for="password2" id="passwordLabel">Powtórz hasło</label>
+                <input class="form-control" id="password2" name="password2" oninput="unlockNewUserButton()"
+                       placeholder="Powtórz hasło" required="required" type="password">
             </div>
-            <p id="errorMessage" class="text-danger text-center"></p>
-                <button disabled id="newUserButton" class="btn btn-secondary" type="submit" >
-                    Zarejestruj
-                </button>
+            <p class="text-danger text-center" id="errorMessage"></p>
+            <button class="btn btn-secondary" disabled id="newUserButton" type="submit">
+                Zarejestruj
+            </button>
         </form>
     </div>
 </div>

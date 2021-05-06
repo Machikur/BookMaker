@@ -7,7 +7,8 @@
     <title>Historia płatności</title>
 </head>
 <body>
-<nav layout:fragment="sidebar"class="nav bg-info justify-content-start sidebar bg-dark rounded ml-5 h-75 p-2 pb-3 mt-5">
+<nav class="nav bg-info justify-content-start sidebar bg-dark rounded ml-5 h-75 p-2 pb-3 mt-5"
+     layout:fragment="sidebar">
     <ul class="list-group serif ">
         <a class="no-dec black-text" th:href="@{/payment}">
             <li class="list-group-item ">Wszystkie</li>
@@ -15,34 +16,34 @@
         <a class="no-dec black-text" th:href="@{/payment(positive=true)}">
             <li class="list-group-item ">Wpłaty</li>
         </a>
-        <a class="no-dec black-text"  th:href="@{/payment(positive=false)}">
+        <a class="no-dec black-text" th:href="@{/payment(positive=false)}">
             <li class="list-group-item ">Wypłaty</li>
         </a>
     </ul>
 </nav>
-<div layout:fragment="content" class="text-center white-text w-50 mx-auto">
-        <h2> Twoje płatności</h2>
-        <div th:if="${payments.isEmpty()}">
-            <h4 class="text-red">Brak rachunków do wyświetlenia</h4>
-        </div>
-        <div th:if="${!payments.isEmpty()}">
-            <table class=" table table-striped table-dark border-inset border-secondary" >
-                <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Kwota</th>
-                    <th>Akcja</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr  th:each=" payment:${payments}">
-                    <td th:text="${payment.getFormattedTime()}"></td>
-                    <td th:class="${payment.positive}? 'text-green':'text-red'" th:text="${payment.amount} + 'zł'"></td>
-                    <td th:text="${payment.positive}? 'Wpłata' : 'Wyciąg'"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="text-center white-text w-50 mx-auto" layout:fragment="content">
+    <h2> Twoje płatności</h2>
+    <div th:if="${payments.isEmpty()}">
+        <h4 class="text-red">Brak rachunków do wyświetlenia</h4>
     </div>
+    <div th:if="${!payments.isEmpty()}">
+        <table class=" table table-striped table-dark border-inset border-secondary">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Kwota</th>
+                <th>Akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each=" payment:${payments}">
+                <td th:text="${payment.getFormattedTime()}"></td>
+                <td th:class="${payment.positive}? 'text-green':'text-red'" th:text="${payment.amount} + 'zł'"></td>
+                <td th:text="${payment.positive}? 'Wpłata' : 'Płatność'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

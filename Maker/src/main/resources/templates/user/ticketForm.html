@@ -19,7 +19,7 @@
     <h2 class="black-color-white-shadow text-center mt-5 mb-1">Kursy</h2>
     <div class="d-flex flex-column justify-content-around">
         <div class="col-6 mx-auto">
-            <table class="table table-dark table-striped w-50 mx-auto">
+            <table class="table table-dark table-striped w-50 mx-auto text-center">
                 <thead>
                 <tr>
                     <th scope="col">Gospodarz</th>
@@ -40,7 +40,7 @@
             <form method="post" th:action="@{/ticket}" th:object="${ticket}">
                 <div class="text-center">
                     <label class="text-white mt-2" for="winner">Na kogo chcesz obstawić?</label>
-                    <select id="winner" class="form-select  mb-2"  th:class="col"
+                    <select class="form-select  mb-2" id="winner" th:class="col"
                             th:field="${ticket.guessedWinner}">
                         <div th:each="win: ${winners}">
                             <option th:text="${win.toString()}" th:value="${win.name}"></option>

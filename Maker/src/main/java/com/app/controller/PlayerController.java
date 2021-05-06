@@ -26,17 +26,19 @@ public class PlayerController {
     }
 
     @GetMapping("/search")
-    public String searchView() {
+    public String searchView(Model model) {
+        model.addAttribute("name", "");
         return "player/findPlayer";
     }
 
 
     @GetMapping("/check")
-    public String getPlayerByIdView(@RequestParam(required = false) String name, Model model, RedirectAttributes attributes) {
+    public String getPlayerByIdView(@RequestParam("name") String name, Model model, RedirectAttributes attributes) {
         try {
             model.addAttribute("player", playersService.getPLayerByName(name));
             return "player/playerView";
-        } catch (RestClientException s) { }
+        } catch (RestClientException s) {
+        }
         attributes.addFlashAttribute("error", "nie znaleziono użytkownika");
         return "redirect:/player/search";
     }

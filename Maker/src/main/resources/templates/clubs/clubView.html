@@ -7,25 +7,25 @@
     <title>Podgląd klubu</title>
 </head>
 <body>
-<div layout:fragment="content" class="ml-5 mr-5 w-100 ">
-    <div class=" d-flex flex-row">
-        <div class="col my-auto black-color-white-shadow text-center ">
+<div class="ml-5 mr-5 w-100 " layout:fragment="content">
+    <div class=" d-flex flex-row text-white shadow-wrapper">
+        <div class="col my-auto  text-center ">
             <h1 th:text="${club.getName()}">Nazwa klubu</h1>
-            <h4 th:text="${club.getShortName()}">Skrót</h4>
-            <h4 th:text="'Siła klubu - '+ ${club.getPower()}"></h4>
+            <h4 class="mt-3" th:text="${club.getShortName()}">Skrót</h4>
+            <h4 class="mt-3" th:text="'Siła klubu - '+ ${club.getPower()}"></h4>
         </div>
         <div class="col  text-center">
             <img class="background-cover" style=" width:500px;" th:src="${club.getPictureUrl()}">
         </div>
-        <div class="col my-auto text-center black-color-white-shadow"
+        <div class="col my-auto text-center "
              th:with="stats=${club.getClubStatistics()}">
-            <h4>Rozegrane Mecze</h4>
+            <h4 class="mt-3">Rozegrane Mecze</h4>
             <span th:text="${club.getClubStatistics().getTotal()}" w></span>
-            <h4>Wygrane Mecze</h4>
+            <h4 class="mt-3">Wygrane Mecze</h4>
             <span th:text="${stats.getWinners()}"></span>
-            <h4>Przegrane Mecze</h4>
+            <h4 class="mt-3">Przegrane Mecze</h4>
             <span th:text="${stats.getLosers()}"></span>
-            <h4>Remisy</h4>
+            <h4 class="mt-3">Remisy</h4>
             <span th:text="${stats.getDraws()}"></span>
         </div>
     </div>
@@ -33,13 +33,14 @@
     <div class="container d-flex flex-row flex-wrap  justify-content-between ">
         <div th:each="player:${club.getPlayers()}">
             <div class="h-25">
-                <div class="p-2 card mt-2 mb-2 text-center border-inset multicolor-red-yellow" >
-                    <img class="card-img-top " style=" width: 18rem; height: 10rem" th:src="${player.getPictureUrl()}"
-                         alt="Card image cap">
+                <div class="p-2 card mt-2 mb-2 text-center border-inset multicolor-gray-white">
+                    <img alt="Card image cap" class="card-img-top " style=" width: 18rem; height: 10rem"
+                         th:src="${player.getPictureUrl()}">
                     <div class="card-body">
                         <h4 class=" black-color-white-shadow" th:text="${player.getFullName()}">Imię zawodnika</h4>
-                        <p class="card-text black-color-white-shadow" th:text="${player.getPosition().getTranslate()}">Pozycja.</p>
-                        <a th:href="@{/player(id=${player.getId()})}" class="btn btn-secondary">Podgląd</a>
+                        <p class="card-text black-color-white-shadow" th:text="${player.getPosition().getTranslate()}">
+                            Pozycja.</p>
+                        <a class="btn btn-secondary" th:href="@{/player(id=${player.getId()})}">Podgląd</a>
                     </div>
                 </div>
             </div>

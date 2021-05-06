@@ -5,26 +5,27 @@ import com.app.client.domain.Winner;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class TicketSystem implements TicketManager {
 
+    private static final BigDecimal QUOTE_MULTIPLIER = BigDecimal.valueOf(0.05);
+    private static final BigDecimal STANDARD_WIN = BigDecimal.valueOf(2);
+
     @Override
     public BigDecimal countMultiplierByWinnerType(MatchDto matchDto, Winner winner) {
         double hostPower = matchDto.getHostTeam().getPower();
         double opponentPower = matchDto.getOppositeTeam().getPower();
-        BigDecimal baseCounter = BigDecimal.valueOf(1.5);
-        double different = (hostPower - opponentPower) / 100;
+        BigDecimal different = BigDecimal.valueOf(hostPower - opponentPower);
         switch (winner) {
             case HOST_TEAM:
-                return baseCounter.subtract(BigDecimal.valueOf(different));
+                return STANDARD_WIN.subtract(different.multiply(QUOTE_MULTIPLIER));
             case OPPOSITE_TEAM:
-                return baseCounter.add(BigDecimal.valueOf(different));
+                return STANDARD_WIN.add(different.multiply(QUOTE_MULTIPLIER));
             case DRAW:
-                return (baseCounter.subtract(BigDecimal.valueOf(different)).add(baseCounter.add(BigDecimal.valueOf(different)))).divide(BigDecimal.valueOf(2));
+                return STANDARD_WIN;
             default:
                 throw new RuntimeException();
         }

@@ -87,7 +87,6 @@ public class UserController {
     public String updateUser(@ModelAttribute("user") User userDetails, @AuthenticationPrincipal User user, RedirectAttributes attributes) {
         activeUser.saveSession(userService.updateDetails(userDetails, user));
         attributes.addFlashAttribute("message", "Uaktualniono dane");
-        System.out.println(user.getUsername() + user.getPassword());
         return "redirect:/user";
     }
 
@@ -98,5 +97,6 @@ public class UserController {
         activeUser.saveSession(userService.updateUser(user));
         return "redirect:/user";
     }
+
 
 }

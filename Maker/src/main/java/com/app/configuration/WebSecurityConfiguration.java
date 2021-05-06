@@ -20,7 +20,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.encoder = encoder;
     }
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -29,15 +28,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll()
+        http.authorizeRequests()
+                .mvcMatchers("/ticket**", "/tickets**", "/payment**", "/user", "/user/picture")
+                .hasAuthority("USER")
+                .mvcMatchers("/", "/club**", "/match**", "/player**", "/login", "/user/register")
+                .permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .loginPage("/")
                 .successHandler(authenticationHandler)
-                .failureHandler((request, response, exception) -> {
-                    request.setAttribute("error", "nie udało sie zalogować");
-                    response.sendRedirect("/");
-                })
                 .and()
                 .logout()
                 .logoutSuccessUrl("/");

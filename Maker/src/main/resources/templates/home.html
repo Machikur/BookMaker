@@ -7,36 +7,38 @@
     <title>Strona głowna</title>
 </head>
 <body>
-<div layout:fragment="content" class="w-100 ml-5 mr-5">
-    <div class="container shadow-wrapper w-50">
-        <h1 class="text-center">Następne spotkanie</h1>
-        <div class="d-flex flex-row w-100">
-            <div class="col text-center">
-                <img class="col d-block"
-                     th:src="${match.getHostTeam().getPictureUrl()}">
-                <h3 th:text="${match.getHostTeam().getName()}"></h3>
-            </div>
-            <div class="col text-center">
-                <h4> Pozostało do końca</h4>
-                <span class="big-text h-auto " id="timeCounter">
+<div class="w-100 ml-5 mr-5" layout:fragment="content">
+    <div class="d-flex row justify-content-around">
+        <div class="shadow-wrapper m-4 mh-auto">
+            <div class="container row">
+                <div class="col mh-auto ">
+                    <img class="col d-block w-100"
+                         th:src="${match.getHostTeam().getPictureUrl()}">
+                    <h3 th:text="${match.getHostTeam().getName()}"></h3>
+                </div>
+                <div class="col text-center">
+                    <h1 class="text-center">Następne spotkanie</h1>
+                    <h4> Pozostało do końca</h4>
+                    <span class="big-text h-auto " id="timeCounter">
                 <span id="hours" th:text="${time.hours}"></span>
                 <span>:</span>
                 <span id="minutes" th:text="${time.minutes}"></span>
                 <span>:</span>
                 <span id="seconds" th:text="${time.seconds}"></span></span>
-                <div sec:authorize="isAuthenticated()">
-                    <a th:href="@{/ticket(matchId=${match.getId()})}">
-                        <button class="btn btn-secondary btn-lg mt-3" id="ticketButton" type="button">Obstaw mecz
-                        </button>
-                    </a>
+                    <div sec:authorize="isAuthenticated()">
+                        <a th:href="@{/ticket(matchId=${match.getId()})}">
+                            <button class="btn btn-secondary btn-lg mt-3" id="ticketButton" type="button">Obstaw mecz
+                            </button>
+                        </a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <button class="mt-2 btn btn-secondary btn-lg"> Zaloguj się aby zrobić zakład</button>
+                    </div>
                 </div>
-                <div sec:authorize="!isAuthenticated()">
-                    <button class="mt-2 btn btn-secondary btn-lg"> Zaloguj się aby zrobić zakład</button>
+                <div class="col text-center">
+                    <img class=" col d-block " th:src="${match.getOppositeTeam().getPictureUrl()}">
+                    <h3 th:text="${match.getOppositeTeam().getName()}"></h3>
                 </div>
-            </div>
-            <div class="col text-center">
-                <img class=" col d-block w-100" th:src="${match.getOppositeTeam().getPictureUrl()}">
-                <h3 th:text="${match.getOppositeTeam().getName()}"></h3>
             </div>
         </div>
     </div>

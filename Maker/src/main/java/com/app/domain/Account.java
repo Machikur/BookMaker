@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
+@Table(name = "account")
 public class Account {
 
     @Id
@@ -30,8 +31,11 @@ public class Account {
         this.cash = BigDecimal.valueOf(100);
     }
 
-
     public void setCash(BigDecimal cash) {
         this.cash = cash;
+    }
+
+    public void addCash(BigDecimal extraCash) {
+        this.cash = this.cash.add(extraCash);
     }
 }

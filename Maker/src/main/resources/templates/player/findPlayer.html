@@ -4,22 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Znajdź zawodnika</title>
-    <script>
-        function findPLayer() {
-            const name = document.getElementById("playerName").value;
-            window.location.href = "http://localhost:8080/player/check?name=" + name;
-        }
-    </script>
 </head>
 <body>
-<div layout:fragment="content" class="mx-auto w-25 mt-5 white-text">
+<div class="mx-auto w-25 mt-5 white-text" layout:fragment="content">
     <h1 class=" text-center">Wyszukaj piłkarza</h1>
-    <form class="text-center">
+    <form class="text-center" th:action="@{/player/check}">
         <div class="form-group">
             <label for="playerName"></label>
-            <input  type="text" class="form-control" id="playerName" placeholder="Imię">
+            <input class="form-control" id="playerName" placeholder="Imię" th:name="name" type="text">
         </div>
-        <a class="btn btn-secondary btn-lg mt-3"  onclick="findPLayer();">Wyszukaj</a>
+        <button class="btn btn-secondary btn-lg mt-3" type="submit">Wyszukaj</button>
     </form>
 </div>
 </body>

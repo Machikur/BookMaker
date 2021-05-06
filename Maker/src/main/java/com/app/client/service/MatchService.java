@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -38,13 +37,13 @@ public class MatchService {
         return result.getBody();
     }
 
-    public List<MatchDto> sortByDate(List<MatchDto> matches){
+    public List<MatchDto> sortByDate(List<MatchDto> matches) {
         matches.sort(Comparator.comparing(MatchDto::getDateOfMatch).thenComparing(MatchDto::getFinishTime));
         return matches;
     }
 
 
-    public List<MatchDto> sortByDateReversed(List<MatchDto> matches){
+    public List<MatchDto> sortByDateReversed(List<MatchDto> matches) {
         matches.sort(Comparator.comparing(MatchDto::getDateOfMatch).thenComparing(MatchDto::getFinishTime).reversed());
         return matches;
     }

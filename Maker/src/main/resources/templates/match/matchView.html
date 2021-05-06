@@ -7,7 +7,7 @@
     <title>Przegląd meczu</title>
 </head>
 <body>
-<div layout:fragment="content" class="mx-auto w-100 text-center ">
+<div class="mx-auto w-100 text-center " layout:fragment="content">
     <div class="container d-flex flex-row justify-content-around black-color-white-shadow">
         <div class="col">
             <a th:href="@{/club/{clubId}(clubId=${match.getHostTeam().getId()})}">
@@ -24,15 +24,15 @@
             </a>
         </div>
     </div>
-    <div class="text-green shadow-wrapper w-25 mx-auto" >
-        <h2  th:text="${match.getDateOfMatch()}"></h2>
-        <h2  th:text="'Start - '+${match.getStartTime()}"></h2>
+    <div class="text-green shadow-wrapper w-25 mx-auto">
+        <h2 th:text="${match.getDateOfMatch()}"></h2>
+        <h2 th:text="'Start - '+${match.getStartTime()}"></h2>
         <h3 class="white-text">Strzelone bramki</h3>
         <div th:each="goal:${match.getGoals()}">
             <h3 class="text-secondary" th:text="${goal.getPlayerName()} + ' - '+ ${goal.getTimeOfGoal()}"></h3>
         </div>
-        <h2 class="text-red" th:text="'Koniec - '+${match.getFinishTime()}"></h2>
-        <h2 th:text="'Wynik - ' + ${match.getResult()}"></h2>
+        <h2 class="text-red" th:text="'Koniec meczu - ' + ${match.getFinishTime()}"></h2>
+        <h2 th:text="'Wynik końcowy - ' + ${match.getResult()}"></h2>
     </div>
 </div>
 

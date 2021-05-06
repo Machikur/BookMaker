@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.domain.Player;
 import com.app.dto.PlayerDto;
 import com.app.mapper.AppMapper;
-import com.app.service.data.PlayerService;
+import com.app.service.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +43,7 @@ public class PlayerController {
     public ResponseEntity<PlayerDto> findByName(@RequestParam String name) {
         Optional<Player> optionalPlayer = playerService.findByFullNameContainingIgnoreCase(name);
         return optionalPlayer.map(player -> ResponseEntity.ok(AppMapper.mapToDto(player)))
-                .orElseGet(()->ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

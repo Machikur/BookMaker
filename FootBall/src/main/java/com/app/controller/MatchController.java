@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.domain.Match;
 import com.app.dto.MatchDto;
 import com.app.mapper.AppMapper;
-import com.app.service.data.MatchService;
+import com.app.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,9 +33,9 @@ public class MatchController {
     }
 
     @GetMapping("/next")
-    public ResponseEntity<MatchDto> findNextMatch(){
-       return matchService.findNext().map(match -> ResponseEntity.ok(AppMapper.mapToDto(match)))
-               .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<MatchDto> findNextMatch() {
+        return matchService.findNext().map(match -> ResponseEntity.ok(AppMapper.mapToDto(match)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/date")

@@ -8,7 +8,7 @@
     <title>Ostatnie spotkania</title>
 </head>
 <body>
-<div layout:fragment="content" class=" w-75 mx-auto ">
+<div class=" w-75 mx-auto " layout:fragment="content">
     <h1 class="black-color-white-shadow text-center ">Historia spotkań</h1>
     <table class="table table-dark table-striped big-shadow border-inset border-secondary">
         <thead>
@@ -28,16 +28,18 @@
             <td><span th:text="${match.getResult()}"></span></td>
             <td><span th:text="${match.getDateOfMatch()}"></span></td>
             <td><span th:text="${match.getFinishTime()}"></span></td>
-            <td><a class="btn btn-secondary"  th:href="@{/match(id=${match.getId()})}">Przegląd spotkania</a></td>
+            <td><a class="btn btn-secondary" th:href="@{/match(id=${match.getId()})}">Przegląd spotkania</a></td>
         </tr>
         </tbody>
     </table>
     <div class="d-flex row justify-content-center">
         <div th:if="${page.hasPrevious()}">
-            <a class="m-2 btn btn-secondary btn-lg" th:href="@{/match/history(page=${page.getNumberOfPage()-1})}">Poprzednia<i class="fa fa-arrow-circle-left"></i></a>
+            <a class="m-2 btn btn-secondary btn-lg" th:href="@{/match/history(page=${page.getNumberOfPage()-1})}">Poprzednia<i
+                    class="fa fa-arrow-circle-left"></i></a>
         </div>
         <div th:if="${page.hasNext()}">
-            <a class="m-2 btn btn-secondary btn-lg" th:href="@{/match/history(page=${page.getNumberOfPage()+1})}">Następna<i class="fa-arrow-circle-right"></i></a>
+            <a class="m-2 btn btn-secondary btn-lg" th:href="@{/match/history(page=${page.getNumberOfPage()+1})}">Następna<i
+                    class="fa-arrow-circle-right"></i></a>
         </div>
 
     </div>

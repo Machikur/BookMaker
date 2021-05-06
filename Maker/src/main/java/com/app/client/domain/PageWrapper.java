@@ -23,7 +23,7 @@ public class PageWrapper {
         return pageDetails.getPageNumber() < totalPages - 1;
     }
 
-    public int getNumberOfPage(){
+    public int getNumberOfPage() {
         return pageDetails.getPageNumber();
     }
 }

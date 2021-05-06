@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
 @Service
 public class UserService implements UserDetailsService {
 
@@ -36,29 +34,22 @@ public class UserService implements UserDetailsService {
         return repository.save(user);
     }
 
-    public User updateDetails(User userDetails,User userToUpdate){
-        if (userDetails.getUsername()!=null){
+    public User updateDetails(User userDetails, User userToUpdate) {
+        if (userDetails.getUsername() != null) {
             userToUpdate.setUsername(userDetails.getUsername());
         }
-        if (userDetails.getPassword()!=null){
+        if (userDetails.getPassword() != null) {
             userToUpdate.setPassword(encoder.encode(userDetails.getPassword()));
         }
-        if (userDetails.getPicturePath()!=null){
+        if (userDetails.getPicturePath() != null) {
             userToUpdate.setPicturePath(userDetails.getPicturePath());
         }
-      return  updateUser(userToUpdate);
+        return updateUser(userToUpdate);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika"));
-    }
-
-    @PostConstruct
-    public void saveAdmin() {
-        User user = new User("Admin", "Admin");
-        user.setAccount(new Account());
-        updateUser(user);
     }
 
 }
